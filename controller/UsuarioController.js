@@ -8,9 +8,21 @@ Usuario.init(connection);
 
 module.exports = {
     async store(jsonParams) {
-        Api.obterInformacoesCampeao(jsonParams);
-    },
-    async getData() {
-        Api.obterInvocador({nomeInvocador: 'Famys'});
+
+        let invocador = await Api.obterInvocador(jsonParams);
+
+        console.log(invocador)
+
+        if(invocador)
+        {
+            Usuario.create({id:invocador.id,
+                            account_id: invocador.accountId,
+                            puuid: invocador.puuid,
+                            nome: invocador.name,
+                            icone_id: invocador.profileIconId,
+                            invocador_level: invocador.summonerLevel });
+        }
+        else
+            console.log('Usuário já possui Registro')
     }
 }

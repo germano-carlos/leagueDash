@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 })
 
 router.post('/invocador/status', function (req, res) {
-   UsuarioController.store(teste);
+   UsuarioController.store({ invocadorNome: req.body.fname});
 })
 
 router.get('/getInvocador', function(req, res){
