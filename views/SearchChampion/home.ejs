@@ -1,0 +1,28 @@
+<%- contentFor('HeaderCss') %>
+<%- contentFor('HeaderStyle') %>
+<% include ../Partials/HeaderStyle  %>
+<%- contentFor('Header') %>
+<%- contentFor('Sidebar') %>
+<%- contentFor('body')  %>
+<center style="padding-top: 20%;">
+    <form action="/invocador/status" method="POST" name="form1">
+        <label for="fname">Nome de Invocador</label>
+        <input placeholder="Insira seu nome de Invocador" type="text"
+            name="fname" style="width: 1000px; text-align: center; justify-items: center; justify-content: center;"></input>
+        <input type="submit" value="Clique para prosseguir"
+            style="width: 1000px; text-align: center; justify-items: center; justify-content: center;">
+    </form>
+</center>
+<%- contentFor('FooterJs') %>
+<%- contentFor('BottomJs') %>
+
+<style>
+    body {
+        background-image: url('../../public/assets/images/bg/YasuoTrueDamage.jpg');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
+<!-- nothing -->

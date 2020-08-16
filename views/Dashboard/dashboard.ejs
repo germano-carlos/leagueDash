@@ -2,18 +2,21 @@
 <!--Chartist Chart CSS -->
 <link rel="stylesheet" href="public/plugins/chartist/css/chartist.min.css">
 <!-- perticular page css -->
-<%- contentFor('body')  %> 
+
+<%- contentFor('HeaderStyle') %>
+<% include ../Partials/HeaderStyle  %>
+<%- contentFor('Header') %>
+<% include ../Partials/Header  %>
+<%- contentFor('Sidebar') %>
+<% include ../Partials/Sidebar  %>
+<%- contentFor('body')  %>
 <%- contentFor('FooterJs') %>
- <!--Chartist Chart-->
- <script src="public/plugins/chartist/js/chartist.min.js"></script>
- <script src="public/plugins/chartist/js/chartist-plugin-tooltip.min.js"></script>
- <!-- peity JS -->
- <script src="public/plugins/peity-chart/jquery.peity.min.js"></script>
- <script src="public/assets/pages/dashboard.js"></script>
+<!--Chartist Chart-->
+<script src="public/plugins/chartist/js/chartist.min.js"></script>
+<script src="public/plugins/chartist/js/chartist-plugin-tooltip.min.js"></script>
+<!-- peity JS -->
+<script src="public/plugins/peity-chart/jquery.peity.min.js"></script>
+<script src="public/assets/pages/dashboard.js"></script>
 
- <%- contentFor('BottomJs') %>
- <!-- nothing -->
-
-
-
-
+<%- contentFor('BottomJs') %>
+<!-- nothing -->

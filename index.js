@@ -13,6 +13,9 @@ app.get('/layouts/', function(req, res) {
   res.render('view');
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Add Authentication Route file with app
 app.use('/', Authrouter); 
 
