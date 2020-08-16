@@ -2,14 +2,18 @@
 
 module.exports = {
   up: (queryInterface, DataTypes) => {
-    return queryInterface.createTable('Usuario', {
+    return queryInterface.createTable('Usuarios', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
-      riotId: {
+      account_id: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      puuid: {
         allowNull: false,
         type: DataTypes.STRING,
         unique: true,
@@ -18,11 +22,19 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      icone_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
+      invocador_level: {
+        allowNull: false,
+        type: DataTypes.INTEGER
+      },
       data_criacao: {
         allowNull: false,
         type: DataTypes.DATE,
       },
-      ultima_atualizacao: {
+      data_revisao: {
         allowNull: false,
         type: DataTypes.DATE,
       },
