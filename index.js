@@ -5,7 +5,6 @@ var http = require('http').Server(app);
 var bCrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var router = require('./router.js');
-var Authrouter = require('./Authrouter.js');
 
 // Access public folder from root
 app.use('/public', express.static('public'));
@@ -13,8 +12,8 @@ app.get('/layouts/', function(req, res) {
   res.render('view');
 });
 
-// Add Authentication Route file with app
-app.use('/', Authrouter); 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //For set layouts of html view
 var expressLayouts = require('express-ejs-layouts');
