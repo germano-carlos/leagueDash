@@ -7,12 +7,11 @@ class Usuario extends Model {
                 primaryKey:true, 
                 type: DataTypes.STRING
             },
-            accountId: DataTypes.STRING,
+            account_id: DataTypes.STRING,
             puuid: DataTypes.STRING,
             nome: DataTypes.STRING,
-            iconeId: DataTypes.INTEGER,
-            invocadorLevel: DataTypes.INTEGER,
-            dataRevisao: DataTypes.INTEGER
+            icone_id: DataTypes.INTEGER,
+            invocador_level: DataTypes.INTEGER
         }, {
             timestamps: false,
             sequelize

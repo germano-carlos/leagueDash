@@ -7,22 +7,25 @@ const connection = new Sequelize(dbConfig);
 Usuario.init(connection);
 
 module.exports = {
+
     async store(jsonParams) {
 
-        let invocador = await Api.obterInvocador(jsonParams);
-
-        console.log(invocador)
-
-        if(invocador)
+        const invocador = await Api.obterInvocador(jsonParams);
+        const findUser = await Usuario.findByPk(invocador.id);
+        
+        if (invocador && !findUser)
         {
-            Usuario.create({id:invocador.id,
+            const user = await Usuario.create({
+                            id: invocador.id,
                             account_id: invocador.accountId,
                             puuid: invocador.puuid,
                             nome: invocador.name,
                             icone_id: invocador.profileIconId,
-                            invocador_level: invocador.summonerLevel });
+                            invocador_level: invocador.summonerLevel
+                        });
+            return user;
         }
-        else
-            console.log('Usuário já possui Registro')
+
+        return findUser;
     }
 }

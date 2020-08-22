@@ -9,8 +9,10 @@ router.get('/', function (req, res) {
    res.render('SearchChampion/home');
 })
 
-router.post('/invocador/status', function (req, res) {
-   UsuarioController.store({ invocadorNome: req.body.fname});
+router.post('/invocador/status', async function (req, res) {
+   const user = await UsuarioController.store({ nomeInvocador: req.body.fname});
+   res.render('SearchChampion/home');
+   
 })
 
 router.get('/getInvocador', function(req, res){
