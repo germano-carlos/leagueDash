@@ -54,11 +54,27 @@
         </script>
     <% } %>
     <% if (localizado) { %>
-        <script type="text/javascript">
+        <script>
             $(document).ready(function () {
-                        var alertTitle = "<%= alertTitle %>"
-                        var alertMessage = "<%= alertMessage %>"
-                        swal(alertTitle, alertMessage, "success");
+                        /*var alertTitle = "<%= //alertTitle %>"
+                        var alertMessage = "<%= //alertMessage %>"
+                        swal(alertTitle, alertMessage, "success");*/
+                        swal({
+                                title: "<%= alertTitle %>",
+                                text: "<%=  alertMessage %>",
+                                icon: "success",
+                                buttons: true,
+                                dangerMode: true,
+                                })
+                                .then((willDelete) => {
+                                if (willDelete) {
+                                    swal("Que ótimo!!! Aguarde e você será redirecionado", {
+                                    icon: "success",
+                                    });
+                                    window.location.href = "/home";
+                                } else {
+                                    swal("Fica tranquilo, sempre que quiser poderá nos consultar");
+                                }});
             })
         </script>
     <% } %>
