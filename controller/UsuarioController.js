@@ -10,9 +10,16 @@ module.exports = {
 
     async store(jsonParams) {
 
-        const invocador = await Api.obterInvocador(jsonParams);
-        const findUser = await Usuario.findByPk(invocador.id);
-        
+        const invocador = await Api.obterInvocador(jsonParams)
+                                    .then((data) => { return data} )
+                                    .catch((err) => { return null } );
+
+        console.log(invocador);
+        if(invocador)
+            var findUser = await Usuario.findByPk(invocador.id);
+        else
+            return null
+
         if (invocador && !findUser)
         {
             const user = await Usuario.create({
@@ -28,4 +35,5 @@ module.exports = {
 
         return findUser;
     }
+
 }
