@@ -14,24 +14,29 @@ router.get('/champion/data', async function (req, res) {
 })
 
 router.post('/invocador/status', async function (req, res) {
+   const Swal = require('sweetalert2');
 
    const user = await UsuarioController.store({ nomeInvocador: req.body.fname });
-   let localizado;
-   let alertTitle;
-   let alertMessage;
+   let localizado = false;;
+   let alertTitle = "Oops!";
+   let alertMessage = "Usuário não encontrado, favor buscar novamente";
 
    if(user) {
       localizado = true;
       alertTitle = "Yeei!";
-      alertMessage = "Usuário encontrado, você será redirecionado";
-   }
-   else {
-      localizado = false;
-      alertTitle = "Oops!";
-      alertMessage = "Usuário não encontrado, favor buscar novamente";
+      alertMessage = "Usuário encontrado, Deseja prosseguir?";
    }
 
-   res.render('Summoner/home', {localizado, alertTitle, alertMessage})
+   /*res.redirect(url.format({
+       pathname:"/",
+       query: {
+          "a": 1,
+          "b": 2,
+          "valid":"your string here"
+        }
+     }));*/
+
+   res.render('Summoner/home', {localizado, alertTitle, alertMessage, Swal})
 })
 
 module.exports = router;

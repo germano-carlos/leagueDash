@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var router = require('./router.js');
 
 // Access public folder from root
-app.use('/public', express.static('public'));
+app.use('/public', express.static(__dirname + '/public'));
 app.get('/layouts/', function(req, res) {
   res.render('view');
 });
