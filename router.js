@@ -6,7 +6,7 @@ const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 
 router.get('/', function (req, res) {
-   res.render('Summoner/home');
+   res.render('Summoner/home', {localizado: undefined, alertTitle: "Oops!", alertMessage: "Something went wrong!"})
 })
 
 router.get('/champion/data', async function (req, res) {
@@ -14,12 +14,24 @@ router.get('/champion/data', async function (req, res) {
 })
 
 router.post('/invocador/status', async function (req, res) {
-   const user = await UsuarioController.store({ nomeInvocador: req.body.fname});
-   // Buscar Partidas
-   // Buscar Imagens
-   // Buscar Campeoes
-   // Redirecionar Tela Dashboard
-   return res.json(user);   
+
+   const user = await UsuarioController.store({ nomeInvocador: req.body.fname });
+   let localizado;
+   let alertTitle;
+   let alertMessage;
+
+   if(user) {
+      localizado = true;
+      alertTitle = "Yeei!";
+      alertMessage = "Usuário encontrado, você será redirecionado";
+   }
+   else {
+      localizado = false;
+      alertTitle = "Oops!";
+      alertMessage = "Usuário não encontrado, favor buscar novamente";
+   }
+
+   res.render('Summoner/home', {localizado, alertTitle, alertMessage})
 })
 
 module.exports = router;

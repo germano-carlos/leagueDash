@@ -27,7 +27,8 @@
     "mysql2": "^2.1.0",
     "path": "^0.12.7",
     "req-flash": "0.0.3",
-    "sequelize": "^6.3.4"
+    "sequelize": "^6.3.4",
+    "sweetalert2": "^10.2.0"
   },
   "repository": {},
   "devDependencies": {

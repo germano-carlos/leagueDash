@@ -42,16 +42,38 @@
         </form>
     </div>
 </nav>
-<center style="padding: 20%; justify-content: center;">
+
+<center style="padding: 20%; justify-content: center;">~
+    <% if (!localizado && typeof localizado != 'undefined') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var alertTitle = "<%= alertTitle %>"
+                        var alertMessage = "<%= alertMessage %>"
+                        swal(alertTitle, alertMessage, "error");
+            })
+        </script>
+    <% } %>
+    <% if (localizado) { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                        var alertTitle = "<%= alertTitle %>"
+                        var alertMessage = "<%= alertMessage %>"
+                        swal(alertTitle, alertMessage, "success");
+            })
+        </script>
+    <% } %>
     <form action="/invocador/status" method="POST" name="form1" style="display: flex;">
         <input placeholder="Insira seu nome de Invocador" type="text" name="fname"
-            style="width: 70%; text-align: center; justify-items: center; justify-content: center;"></input>
+            style="width: 80%; text-align: center; justify-items: center; justify-content: center;"></input>
         <input class="btn btn-primary" type="submit" value="Clique para prosseguir"
             style=" text-align: center; justify-items: center; justify-content: center;">
     </form>
 </center>
 <%- contentFor('FooterJs') %>
 <%- contentFor('BottomJs') %>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
 
 <style>
     body {
