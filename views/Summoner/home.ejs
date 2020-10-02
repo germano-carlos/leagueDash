@@ -43,7 +43,7 @@
     </div>
 </nav>
 
-<center style="padding: 20%; justify-content: center;">~
+<center style="padding: 20%; justify-content: center;">
     <% if (!localizado && typeof localizado != 'undefined') { %>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -56,9 +56,6 @@
     <% if (localizado) { %>
         <script>
             $(document).ready(function () {
-                        /*var alertTitle = "<%= //alertTitle %>"
-                        var alertMessage = "<%= //alertMessage %>"
-                        swal(alertTitle, alertMessage, "success");*/
                         swal({
                                 title: "<%= alertTitle %>",
                                 text: "<%=  alertMessage %>",
@@ -71,7 +68,8 @@
                                     swal("Que ótimo!!! Aguarde e você será redirecionado", {
                                     icon: "success",
                                     });
-                                    window.location.href = "/home";
+                                    sessionStorage.setItem("setSearched", "1")
+                                    setTimeout(function(){ window.location.href = "/invocador/data/"+"<%= id %>"; }, 3000);
                                 } else {
                                     swal("Fica tranquilo, sempre que quiser poderá nos consultar");
                                 }});
@@ -93,10 +91,7 @@
 
 <style>
     body {
-        background-image: url('../../public/assets/images/bg/YasuoTrueDamage.jpg');
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
+        background-image: url('../../public/assets/images/bg/SKTTeam.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;

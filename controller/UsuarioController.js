@@ -13,17 +13,16 @@ module.exports = {
         const invocador = await Api.obterInvocador(jsonParams)
                                     .then((data) => { return data} )
                                     .catch((err) => { return null } );
-
         console.log(invocador);
         if(invocador)
-            var findUser = await Usuario.findByPk(invocador.id);
+            var findUser = await Usuario.findOne({ where: { id_riot: invocador.id } });
         else
             return null
-
+        
         if (invocador && !findUser)
         {
             const user = await Usuario.create({
-                            id: invocador.id,
+                            id_riot: invocador.id,
                             account_id: invocador.accountId,
                             puuid: invocador.puuid,
                             nome: invocador.name,

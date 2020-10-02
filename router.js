@@ -8,6 +8,7 @@ const CampeaoController = require('./controller/CampeaoController');
 
 router.get('/', function (req, res) {
    let localizado = req.query.localizado;
+   let id =  req.query.id;
    let alertTitle = "";
    let alertMessage = "";
 
@@ -22,7 +23,7 @@ router.get('/', function (req, res) {
       alertMessage = "Usuário não encontrado,Tente Novamente";
    }
 
-   res.render('Summoner/home', {localizado, alertTitle, alertMessage});
+   res.render('Summoner/home', {localizado, alertTitle, alertMessage, id});
 })
 
 router.get('/champion/data', async function (req, res) {
@@ -33,11 +34,21 @@ router.post('/invocador/status', async function (req, res) {
 
    const user = await UsuarioController.store({ nomeInvocador: req.body.fname });
    let localizado = (user) ? true : false ;
+   let id = (user) ? user.id : 0;
 
    res.redirect(url.format({
        pathname:"/",
-       query: { localizado }
+       query: { localizado, id }
      }));
+
+})
+
+router.get('/invocador/data/:id', async function (req,res) {
+   const id = req.params.id;
+
+   const user = UsuarioController.get
+   res.render('Dashboard/dashboard');
+
 
 })
 
