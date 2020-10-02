@@ -58,8 +58,15 @@
             });
         });
 
+        $('.sa-params').on('click', function() {alert('safsa000')})
+
+        $(document).on("click", ".sa-params", function(){
+            alert('safsa000');
+        })
+        
         //Parameter
-        $('#sa-params').click(function () {
+        $('.sa-params').click(function () {
+            alert('click');
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                   confirmButton: 'btn btn-success',
