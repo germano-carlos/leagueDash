@@ -5,9 +5,11 @@ const url = require('url');
 //Import Controllers Here
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
+const PartidaController = require('./controller/PartidaController');
 
 router.get('/', function (req, res) {
    let localizado = req.query.localizado;
+   let id =  req.query.id;
    let alertTitle = "";
    let alertMessage = "";
 
@@ -22,7 +24,7 @@ router.get('/', function (req, res) {
       alertMessage = "Usuário não encontrado,Tente Novamente";
    }
 
-   res.render('Summoner/home', {localizado, alertTitle, alertMessage});
+   res.render('Summoner/home', {localizado, alertTitle, alertMessage, id});
 })
 
 router.get('/champion/data', async function (req, res) {
@@ -33,12 +35,21 @@ router.post('/invocador/status', async function (req, res) {
 
    const user = await UsuarioController.store({ nomeInvocador: req.body.fname });
    let localizado = (user) ? true : false ;
+   let id = (user) ? user.id : 0;
 
    res.redirect(url.format({
        pathname:"/",
-       query: { localizado }
+       query: { localizado, id }
      }));
 
+})
+
+router.get('/invocador/data/:id', async function (req,res) {
+   const id = req.params.id;
+   const user = await UsuarioController.getUser(id);
+   const Partidas = await PartidaController.store(user);
+   console.log(Partidas)
+   res.render('Dashboard/dashboard', {Partidas});
 })
 
 module.exports = router;
