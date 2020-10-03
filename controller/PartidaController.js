@@ -9,9 +9,13 @@ Partida.init(connection);*/
 module.exports = {
 
     async store(jsonParams) {
-        var iafjisjisajfisajifjisa = [];
-        const Partidas = await Api.obterPartidas(jsonParams.account_id);
+        var PartidasDetalhes = [];
+
+        let formatDate = new Date();
+        let timeStamp = formatDate.setDate(formatDate.getDate() - 14);
         
+        const Partidas = await Api.obterPartidas(jsonParams.account_id, timeStamp);
+        console.log('achou'+ Partidas.length +'partidas')
         const promisse = new Promise(async (resolve, reject) => {
             await Partidas.forEach(async (element, index) => {
                 if(index < 10)
@@ -50,11 +54,10 @@ module.exports = {
                         achou = true;
                     }
     
-                    iafjisjisajfisajifjisa.push({lane, gameMode, gameType, championId, win, kills,deaths, assists});
-                    if(iafjisjisajfisajifjisa.length == 10)
+                    PartidasDetalhes.push({lane, gameMode, gameType, championId, win, kills,deaths, assists});
+                    if(PartidasDetalhes.length == (Partidas.length))
                     {
-                        console.log('1')
-                        resolve(iafjisjisajfisajifjisa)
+                        resolve(PartidasDetalhes)
                     }
                         
                 }
