@@ -12,30 +12,38 @@
 <%- contentFor('body')  %>
 
 <% if (Partidas) { %>
-<% for( let index = 0; index < Partidas.length; index++ ) {
+<% for( var index = 0; index < Partidas.length; index++ ) {
      let color = Partidas[i].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
      let phrase = Partidas[i].win ? "Victory" : "Defeat";
-      %>
-<a href="#">
-    <div class="card mb-1">
-        <div class="row no-gutters">
-            <div class="col-md-1">
-                <img src="../../public/assets/images/bg/YasuoTrueDamage.jpg" class="card-img-top img-fluid "
-                    style="object-fit: cover; height: 100%;">
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title"> <%= phrase %> </h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+%>
+    <a href="#">
+        <div class="card mb-1" id="card-partida-<%=index%>">
+            <div class="row no-gutters">
+                <div class="col-md-1">
+                    <img src="../../public/assets/images/bg/YasuoTrueDamage.jpg" class="card-img-top img-fluid "
+                        style="object-fit: cover; height: 100%;">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title"> <%= phrase %> </h5>
+                        <p class="card-text">KDA 1. KILL - 2 DEATH - 3 ASSIS</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</a>
-<% } %>
-<% } %>
+    </a>
+    
+    <script>
+        var teste = "<%=index%>";
+        var color = "<%=color%>";
+        var btn = document.getElementById('card-partida-' + teste);
+        btn.style.backgroundColor = color;        
+    </script>
+<% 
+    }
+} %>
+
 <%- contentFor('FooterJs') %>
 <!--Chartist Chart-->
 <script src="public/plugins/chartist/js/chartist.min.js"></script>
