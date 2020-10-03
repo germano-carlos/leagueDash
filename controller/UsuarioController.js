@@ -33,6 +33,15 @@ module.exports = {
         }
 
         return findUser;
+    },
+    async getUser(id) {
+
+        var findUser = await Usuario.findByPk(id);
+
+        if (findUser)
+            return findUser;
+
+        return null;
     }
 
 }

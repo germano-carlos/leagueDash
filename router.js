@@ -5,6 +5,7 @@ const url = require('url');
 //Import Controllers Here
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
+const PartidaController = require('./controller/PartidaController');
 
 router.get('/', function (req, res) {
    let localizado = req.query.localizado;
@@ -45,11 +46,10 @@ router.post('/invocador/status', async function (req, res) {
 
 router.get('/invocador/data/:id', async function (req,res) {
    const id = req.params.id;
-
-   const user = UsuarioController.get
-   res.render('Dashboard/dashboard');
-
-
+   const user = await UsuarioController.getUser(id);
+   const Partidas = await PartidaController.store(user);
+   console.log(Partidas)
+   res.render('Dashboard/dashboard', {Partidas});
 })
 
 module.exports = router;

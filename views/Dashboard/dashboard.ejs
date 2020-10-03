@@ -10,6 +10,32 @@
 <%- contentFor('Sidebar') %>
 <% include ../Partials/Sidebar  %>
 <%- contentFor('body')  %>
+
+<% if (Partidas) { %>
+<% for( let index = 0; index < Partidas.length; index++ ) {
+     let color = Partidas[i].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
+     let phrase = Partidas[i].win ? "Victory" : "Defeat";
+      %>
+<a href="#">
+    <div class="card mb-1">
+        <div class="row no-gutters">
+            <div class="col-md-1">
+                <img src="../../public/assets/images/bg/YasuoTrueDamage.jpg" class="card-img-top img-fluid "
+                    style="object-fit: cover; height: 100%;">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title"> <%= phrase %> </h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+<% } %>
+<% } %>
 <%- contentFor('FooterJs') %>
 <!--Chartist Chart-->
 <script src="public/plugins/chartist/js/chartist.min.js"></script>
@@ -19,4 +45,10 @@
 <script src="public/assets/pages/dashboard.js"></script>
 
 <%- contentFor('BottomJs') %>
-<!-- nothing -->
+
+<style>
+    .content-page {
+        margin-left: 400px;
+        overflow: hidden;
+    }
+</style>
