@@ -11,39 +11,96 @@
 <% include ../Partials/Sidebar  %>
 <%- contentFor('body')  %>
 
-<% if (Partidas) { %>
-<% for( let index = 0; index < Partidas.length; index++ ) {
-     let color = Partidas[i].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
-     let phrase = Partidas[i].win ? "Victory" : "Defeat";
-      %>
-<a href="#">
-    <div class="card mb-1">
+<% if (Partidas) { 
+for( var index = 0; index < Partidas.length; index++ ) {
+     let color = Partidas[index].win ? "#8fd19e" : "#ed969e";
+     let phrase = Partidas[index].win ? "Victory" : "Defeat";
+     let kda = Partidas[index].kills + " / " + Partidas[index].deaths + " / " + Partidas[index].assists;
+     let gameType = Partidas[index].gameType;
+     let gameMode = Partidas[index].gameMode == "CLASSIC" ? "Clássico" : Partidas[index].gameMode;
+     let img = Partidas[index].urlImage;
+
+     let gameId = Partidas[index].gameId;
+%>
+<a class="cards" style="cursor: pointer;" data-toggle="modal" data-target=".bs-example-modal-lg" data-identificador="<%=gameId%>">
+    <div class="card mb-3" id="card-partida-<%=index%>">
         <div class="row no-gutters">
-            <div class="col-md-1">
-                <img src="../../public/assets/images/bg/YasuoTrueDamage.jpg" class="card-img-top img-fluid "
-                    style="object-fit: cover; height: 100%;">
+            <div class="col-md-3">
+                <img src="<%=img%>" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
             </div>
             <div class="col-md-9">
                 <div class="card-body">
                     <h5 class="card-title"> <%= phrase %> </h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
+                    <p class="card-text"> <%= gameMode %> </p>
+                    <p class="card-text"> <%= kda %> </p>
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
         </div>
     </div>
 </a>
-<% } %>
-<% } %>
-<%- contentFor('FooterJs') %>
-<!--Chartist Chart-->
-<script src="public/plugins/chartist/js/chartist.min.js"></script>
-<script src="public/plugins/chartist/js/chartist-plugin-tooltip.min.js"></script>
-<!-- peity JS -->
-<script src="public/plugins/peity-chart/jquery.peity.min.js"></script>
-<script src="public/assets/pages/dashboard.js"></script>
 
+<script>
+    var teste = "<%=index%>";
+    var color = "<%=color%>";
+    var btn = document.getElementById('card-partida-' + teste);
+    btn.style.backgroundColor = color;        
+</script>
+<% 
+    }
+} %>
+
+<div class="col-sm-6 col-md-3 m-t-30">
+    <!--  Modal content for the above example -->
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title mt-0" id="myLargeModalLabel">Large modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Player</th>
+                                    <th>KDA</th>
+                                    <th>Gold Recebido</th>
+                                    <th>Gold Gasto</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-dark" id="winners">
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Player</th>
+                                    <th>KDA</th>
+                                    <th>Gold Recebido</th>
+                                    <th>Gold Gasto</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-dark" id="losers">
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+<%- contentFor('FooterJs') %>
 <%- contentFor('BottomJs') %>
 
 <style>
@@ -52,3 +109,59 @@
         overflow: hidden;
     }
 </style>
+
+<script>
+    $(document).ready(() => { 
+
+        $('.cards').click(function () {
+            let idPartida = $(this).data('identificador');
+
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                url: 'http://localhost:5000/partida/data/'+idPartida,
+                error: function (result) { 
+                    console.log("Deu Ruim ai Amigo"); 
+                }}).then((data) => {
+                    let html1 = $('#winners');
+                    let html2 = $('#losers');
+                    let htmlWinner = '';
+                    let htmlLoser = '';
+
+
+                    data.forEach(element => {
+                        if(element.win)
+                        {
+                            htmlWinner += `
+                                <tr class="table-success">
+                                    <td><img src="${element.urlImage}" style="height:40px" class="img-fluid"></td>
+                                    <td>${element.nome}</td>
+                                    <td>${element.kill} / ${element.deaths} / ${element.assists}</td>
+                                    <td>${element.goldEarned}</td>
+                                    <td>${element.goldSpent}</td>
+                                </tr>
+                                `;
+                        }
+                        else
+                        {
+                            htmlLoser += `
+                                <tr class="table-danger">
+                                    <td><img src="${element.urlImage}" style="height:40px" class="img-fluid"></td>
+                                    <td>${element.nome}</td>
+                                    <td>${element.kill} / ${element.deaths} / ${element.assists}</td>
+                                    <td>${element.goldEarned}</td>
+                                    <td>${element.goldSpent}</td>
+                                </tr>
+                                `;
+                        }
+                    });
+
+                    html1.html(htmlWinner);
+                    html2.html(htmlLoser);
+
+                });
+            })
+    });
+    
+</script>
