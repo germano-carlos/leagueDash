@@ -18,13 +18,13 @@ for( var index = 0; index < Partidas.length; index++ ) {
      let kda = Partidas[index].kills + " / " + Partidas[index].deaths + " / " + Partidas[index].assists;
      let gameType = Partidas[index].gameType;
      let gameMode = Partidas[index].gameMode == "CLASSIC" ? "Clássico" : Partidas[index].gameMode;
-     console.log(kda);
+     let img = Partidas[index].urlImage;
 %>
     <a href="#">
-        <div class="card mb-1" id="card-partida-<%=index%>">
+        <div class="card mb-2" id="card-partida-<%=index%>">
             <div class="row no-gutters">
-                <div class="col-md-1">
-                    <img src="../../public/assets/images/bg/YasuoTrueDamage.jpg" class="card-img-top img-fluid "
+                <div class="col-md-2">
+                    <img src="<%=img%>" class="card-img-top img-fluid "
                         style="object-fit: cover; height: 100%;">
                 </div>
                 <div class="col-md-9">
