@@ -48,7 +48,8 @@ router.get('/invocador/data/:id', async function (req,res) {
    const id = req.params.id;
    const user = await UsuarioController.getUser(id);
    const Partidas = await PartidaController.store(user);
-   console.log(Partidas)
+
+   
    res.render('Dashboard/dashboard', {Partidas});
 })
 

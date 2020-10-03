@@ -15,7 +15,8 @@ module.exports = {
         let timeStamp = formatDate.setDate(formatDate.getDate() - 14);
         
         const Partidas = await Api.obterPartidas(jsonParams.account_id, timeStamp);
-        console.log('achou'+ Partidas.length +'partidas')
+        let contador = 0;
+
         const promisse = new Promise(async (resolve, reject) => {
             await Partidas.forEach(async (element, index) => {
                 if(index < 10)
@@ -55,11 +56,11 @@ module.exports = {
                     }
     
                     PartidasDetalhes.push({lane, gameMode, gameType, championId, win, kills,deaths, assists});
-                    if(PartidasDetalhes.length == (Partidas.length))
+                    if(PartidasDetalhes.length == Partidas.length || contador == 9)
                     {
                         resolve(PartidasDetalhes)
                     }
-                        
+                    contador++;
                 }
             });
         })
