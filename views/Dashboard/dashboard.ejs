@@ -11,10 +11,10 @@
 <% include ../Partials/Sidebar  %>
 <%- contentFor('body')  %>
 
-<% if (Partidas) { %>
-<% for( var index = 0; index < Partidas.length; index++ ) {
-     let color = Partidas[i].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
-     let phrase = Partidas[i].win ? "Victory" : "Defeat";
+<% if (Partidas) { 
+for( var index = 0; index < Partidas.length; index++ ) {
+     let color = Partidas[index].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
+     let phrase = Partidas[index].win ? "Victory" : "Defeat";
 %>
     <a href="#">
         <div class="card mb-1" id="card-partida-<%=index%>">
