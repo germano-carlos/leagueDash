@@ -15,6 +15,10 @@
 for( var index = 0; index < Partidas.length; index++ ) {
      let color = Partidas[index].win ? "rgb(109, 245, 78)" : "rgb(255, 31, 53)";
      let phrase = Partidas[index].win ? "Victory" : "Defeat";
+     let kda = Partidas[index].kills + " / " + Partidas[index].deaths + " / " + Partidas[index].assists;
+     let gameType = Partidas[index].gameType;
+     let gameMode = Partidas[index].gameMode == "CLASSIC" ? "Clássico" : Partidas[index].gameMode;
+     console.log(kda);
 %>
     <a href="#">
         <div class="card mb-1" id="card-partida-<%=index%>">
@@ -26,7 +30,8 @@ for( var index = 0; index < Partidas.length; index++ ) {
                 <div class="col-md-9">
                     <div class="card-body">
                         <h5 class="card-title"> <%= phrase %> </h5>
-                        <p class="card-text">KDA 1. KILL - 2 DEATH - 3 ASSIS</p>
+                        <p class="card-text"> <%= gameMode %> </p>
+                        <p class="card-text"> <%= kda %> </p>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                 </div>
