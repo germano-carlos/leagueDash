@@ -21,11 +21,11 @@ for( var index = 0; index < Partidas.length; index++ ) {
      let img = Partidas[index].urlImage;
 %>
     <a href="#">
-        <div class="card mb-2" id="card-partida-<%=index%>">
+        <div class="card mb-3" id="card-partida-<%=index%>">
             <div class="row no-gutters">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <img src="<%=img%>" class="card-img-top img-fluid "
-                        style="object-fit: cover; height: 100%;">
+                        style="object-fit: fill; height: 100%;">
                 </div>
                 <div class="col-md-9">
                     <div class="card-body">
