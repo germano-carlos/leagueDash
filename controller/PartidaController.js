@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/database');
+const CampeaoController = require('../controller/CampeaoController');
 /*const Partida = require('../app/models/Partida.js');*/
 
 const Campeao = require('../app/models/Campeao');
@@ -27,6 +28,7 @@ module.exports = {
                     let lane = element.lane;
                     let gameMode = Detalhes.data.gameMode;
                     let gameType = Detalhes.data.gameType;
+                    let gameId = Detalhes.data.gameId;
 
                     let championId = 0;
                     let win = 0;
@@ -63,7 +65,7 @@ module.exports = {
                         urlImage = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.nome.replace(" ","")}_0.jpg`;
                     }
     
-                    PartidasDetalhes.push({lane, gameMode, gameType, championId, win, kills,deaths, assists, urlImage});
+                    PartidasDetalhes.push({lane, gameMode, gameType, championId, win, kills,deaths, assists, urlImage, gameId});
                     if(PartidasDetalhes.length == Partidas.length || contador == 9)
                     {
                         resolve(PartidasDetalhes)
@@ -76,6 +78,55 @@ module.exports = {
         return await promisse.then((data) => {return data})
                              .catch((err) => {console.log('err')});
 
+    },
+    async getPartida(id) {
+        const Partida = await Api.obterPartidasById(id);
+        return Partida;
+    },
+    async Detalhes(id)
+    {
+        const Details = await this.getPartida(id);
+
+        let playerArray = [];
+        let contador = 0;
+        
+        const promisse = await new Promise (async (resolve, reject) => {
+            await Details.data.participants.forEach(async (element, index) => {
+                let participantId = element.participantId;
+                let nome = "undefined";
+                let tier = "undefined";
+                let championId = element.championId;
+                let kill = element.stats.kills;
+                let deaths = element.stats.deaths;
+                let assists = element.stats.assists;
+                let win = element.stats.win;
+                let goldEarned = element.stats.goldEarned;
+                let goldSpent = element.stats.goldSpent;
+                let champion = await CampeaoController.getChampion(championId);
+                let championName = champion.nome;
+                let urlImage = `http://ddragon.leagueoflegends.com/cdn/10.20.1/img/champion/${championName.replace(" ","")}.png`;
+        
+                playerArray.push({participantId,nome, tier, championId, kill, deaths, assists, win, goldEarned, goldSpent, championName, urlImage});
+                contador++;
+                if(contador == Details.data.participants.length)
+                {
+                    resolve(playerArray);
+                }
+            });
+        })
+
+        for(k=0;k<playerArray.length;k++)
+        {
+            for(j=0;j<Details.data.participantIdentities.length;j++)
+            {
+                if(playerArray[k].participantId != Details.data.participantIdentities[j].participantId)
+                { continue; }
+
+                playerArray[k].nome = Details.data.participantIdentities[j].player.summonerName;
+            }
+        }
+
+        return playerArray;
     }
 
 }

@@ -53,4 +53,9 @@ router.get('/invocador/data/:id', async function (req,res) {
    res.render('Dashboard/dashboard', {Partidas});
 })
 
+router.get('/partida/data/:id', async function (req,res) {
+   const Players = await PartidaController.Detalhes(req.params.id);
+   return res.json(Players);
+})
+
 module.exports = router;

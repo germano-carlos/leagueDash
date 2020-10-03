@@ -30,5 +30,9 @@ module.exports = {
 
 
         return array
+    },
+    async getChampion(id)
+    {
+        return await Campeao.findOne({where : {key: id}});
     }
 }
