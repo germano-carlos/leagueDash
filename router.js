@@ -58,4 +58,8 @@ router.get('/partida/data/:id', async function (req,res) {
    return res.json(Players);
 })
 
+router.get('/campeao/analise', async function (req,res) {
+   res.render('Champion/analytics', {});
+})
+
 module.exports = router;
