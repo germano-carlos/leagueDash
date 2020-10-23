@@ -20,7 +20,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis qui officiis porro ducimus voluptate iure vitae earum, quaerat distinctio modi neque? Officia unde excepturi, illo ea amet molestiae alias aliquid.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis qui officiis porro ducimus voluptate
+                iure vitae earum, quaerat distinctio modi neque? Officia unde excepturi, illo ea amet molestiae alias
+                aliquid.
             </div>
         </div>
     </div>
@@ -32,268 +34,39 @@
             <div class="card-body">
                 <h5>Campeões Disponíveis</h5>
                 <div class="row">
+
+                    <% if (Campeoes) { 
+                        for( var index = 0; index < Campeoes.length; index++ ) {
+                            let nome = Campeoes[index].nome;
+                            let id = Campeoes[index].id;
+                            let title = Campeoes[index].title;
+                            let key = Campeoes[index].key;
+                            let blurb = Campeoes[index].blurb;
+                            %>
+
+
                     <div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
+                        <a href="#" data-identificador="<%=id%>" class="campeao-item">
+                            <div class="card directory-card">
+                                <div class="card-body">
+                                    <div class="float-left mr-4">
+                                        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/<%=id%>_0.jpg"
+                                            alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
+                                    </div>
+                                    <h5 class="text-primary font-18 mt-0 mb-1"><%= nome %></h5>
+                                    <p class="font-12 mb-2"><%= title %></p>
+                                    <p class="mb-4"><%= blurb.substring(0,50) %>...Read More</p>
+                                    <div class="clearfix"></div>
+                                    <hr>
                                 </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                    <div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div><div class="col-xl-3 col-md-4">
-                        <div class="card directory-card">
-                            <div class="card-body">
-                                <div class="float-left mr-4">
-                                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="" class="img-fluid img-thumbnail rounded-circle thumb-lg">
-                                </div>
-                                <h5 class="text-primary font-18 mt-0 mb-1">Caitlyn</h5>
-                                <p class="font-12 mb-2">AD Carry</p>
-                                <p class="mb-4">Patrulheira</p>
-                                <div class="clearfix"></div>
-                                <hr>
-                            </div>
-                        </div>
-                    </div>
+
+                    <% 
+                        }
+                    } %>
+
                 </div>
             </div>
         </div>
@@ -302,36 +75,46 @@
         <div class="card">
             <div class="card-body">
 
-                <h4 class="mt-0 header-title">Responsive images</h4>
-                <p class="text-muted m-b-30">Images in Bootstrap are made responsive
-                    with <code class="highlighter-rouge">.img-fluid</code>. <code
-                            class="highlighter-rouge">max-width: 100%;</code> and <code
-                            class="highlighter-rouge">height: auto;</code> are applied to
-                    the image so that it scales with the parent element.</p>
+                <h2 id="champion-details-header">Campeão Selecionado - Não selecionado</h2>
+                <div id="accordion">
+                    <div class="card mb-1">
+                        <div class="card-header p-3" id="headingOne">
+                            <h6 class="m-0 font-14">
+                                <a href="#collapseOne" class="text-white" data-toggle="collapse" aria-expanded="true"
+                                    aria-controls="collapseOne" >
+                                    História Campeão
+                                </a>
+                            </h6>
+                        </div>
 
-                <div class="">
-                    <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" class="img-fluid" alt="Responsive image">
-                </div>
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner" role="listbox"  style="margin-top: 5%;height:150px;">
-                        <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="First slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="Second slide">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Caitlyn_0.jpg" alt="Third slide">
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                            data-parent="#accordion">
+                            <div class="card-body" id="champion-details-history">
+
+                            </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                    <div class="card mb-1">
+                        <div class="card-header p-3" id="headingTwo">
+                            <h6 class="m-0 font-14">
+                                <a href="#collapseTwo" class="text-white collapsed" data-toggle="collapse"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                    Build Dicas
+                                </a>
+                            </h6>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="imagem-box">
+                    <img src="/public/assets/images/bg/interrogacao.png" class="img-fluid" alt="Responsive image">
+                </div>
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    
                 </div>
             </div>
         </div>
@@ -357,4 +140,71 @@
         background-repeat: no-repeat;
         background-position: center;
     }
+
+    .card-header {
+        background-color: rgba(29, 131, 145);
+    }
+
+    .imagem-box img {
+        width: 100%;
+    }
 </style>
+
+<script>
+    $(document).ready(function () {
+        $('.campeao-item').click(function () {
+            let key = $(this).data('identificador');
+            
+
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                url: 'http://localhost:5000/campeao/by_id/'+key,
+                error: function (result) { 
+                    console.log("Deu Ruim ai Amigo"); 
+                }}).then((data) => {
+                    
+                    console.log(data)
+                    let headerHTML = $('#champion-details-header');
+                    let historyHTML = $('#champion-details-history');
+                    let imageHTML = $('.imagem-box');
+                    let arrayCarrousel = $('#carouselExampleControls');
+
+                    headerHTML.html(`Campeão Selecionado - ${data.nome}`);
+                    historyHTML.html(data.blurb);
+                    imageHTML.html(`<img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${data.id}_0.jpg" class="img-fluid" alt="Responsive image">`);
+
+                    // AJUSTAR CARROUSEL
+                    arrayCarrousel.html(`
+                                        <div class="carousel-inner" role="listbox" style="margin-top: 5%;height:150px;">
+                                            <div class="carousel-item active">
+                                                <img class="d-block img-fluid" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${data.id}_0.jpg"
+                                                    alt="First slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block img-fluid"
+                                                    src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${data.id}_0.jpg"
+                                                    alt="Second slide">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img class="d-block img-fluid" src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${data.id}_0.jpg"
+                                                    alt="Third slide">
+                                            </div>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>`);
+
+                });
+
+
+        })
+    })
+
+</script>

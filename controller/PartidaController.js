@@ -102,7 +102,7 @@ module.exports = {
                 let win = element.stats.win;
                 let goldEarned = element.stats.goldEarned;
                 let goldSpent = element.stats.goldSpent;
-                let champion = await CampeaoController.getChampion(championId);
+                let champion = await CampeaoController.getChampionByKey(championId);
                 let championName = champion.nome;
                 let urlImage = `http://ddragon.leagueoflegends.com/cdn/10.20.1/img/champion/${championName.replace(" ","")}.png`;
         
