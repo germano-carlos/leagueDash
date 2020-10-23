@@ -59,7 +59,15 @@ router.get('/partida/data/:id', async function (req,res) {
 })
 
 router.get('/campeao/analise', async function (req,res) {
-   res.render('Champion/analytics', {});
+
+   const Campeoes = await CampeaoController.getAll();
+
+   console.log(Campeoes);
+
+
+
+
+   res.render('Champion/analytics', {Campeoes});
 })
 
 module.exports = router;
