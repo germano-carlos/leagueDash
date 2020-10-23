@@ -20,7 +20,8 @@ module.exports = {
                 id: Object.values(campeaoList.data)[contador].id,
                 key: Object.values(campeaoList.data)[contador].key,
                 nome: Object.values(campeaoList.data)[contador].name,
-                title: Object.values(campeaoList.data)[contador].title
+                title: Object.values(campeaoList.data)[contador].title,
+                blurb: Object.values(campeaoList.data)[contador].blurb
             });
 
             await Campeao.create(array[array.length-1]);
@@ -31,9 +32,13 @@ module.exports = {
 
         return array
     },
-    async getChampion(id)
+    async getChampionByKey(id)
     {
         return await Campeao.findOne({where : {key: id}});
+    },
+    async getChampionById(id)
+    {
+        return await Campeao.findByPk(id);
     },
     async getAll() {
         const campeaoList = await Campeao.findAll();

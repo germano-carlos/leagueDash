@@ -9,7 +9,8 @@ class Campeao extends Model {
             },
             key: DataTypes.STRING,
             nome: DataTypes.STRING,
-            title: DataTypes.STRING
+            title: DataTypes.STRING,
+            blurb: DataTypes.STRING
         }, {
             timestamps: false,
             sequelize,
