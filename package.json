@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "ejs": "^2.6.1",
     "ejs-lint": "^0.3.0",
     "ejs-locals": "^1.0.2",
