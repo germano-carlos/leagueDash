@@ -44,5 +44,8 @@ module.exports = {
         const campeaoList = await Campeao.findAll();
 
         return campeaoList;
+    },
+    async getRiotById(id) {
+        return await Api.obterInformacoesCampeao({nomeCampeao: id});
     }
 }
