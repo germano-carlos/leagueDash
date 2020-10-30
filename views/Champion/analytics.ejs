@@ -119,6 +119,8 @@
     </div>
 </div>
 <%- contentFor('FooterJs') %>
+<script src="../public/plugins/flot-chart/jquery.flot.min.js"></script>
+        <script src="../public/plugins/flot-chart/jquery.flot.pie.js"></script>
 <%- contentFor('BottomJs') %>
 
 
@@ -158,7 +160,7 @@
                 type: 'GET',
                 cache: false,
                 contentType: 'application/json',
-                url: 'http://leaguedash.herokuapp.com/campeao/by_id/'+key,
+                url: 'http://localhost:5000/campeao/by_id/'+key,//leaguedash.herokuapp.com
                 error: function (result) { 
                     console.log("Deu Ruim ai Amigo"); 
                 }}).then((data) => {

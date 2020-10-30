@@ -2,23 +2,116 @@
 Sem registros até o presente momento. Por favor, volte ao menu principal e faça uma pesquisa de personagem
 <% } 
 else {console.log()%>
-<div class="col-xl-4 col-md-4" style="border: 2px solid red;">
-    <div class="card directory-card">
-        <div class="card-body">
-            <div class="float-left mr-2">
-                <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= Usuario.profileIconId %>.png" alt=""
-                    class="img-fluid img-thumbnail thumb-xl">
+<div class="row">
+    <div class="col-xl-4 col-md-4">
+        <div class="card directory-card">
+            <div class="card-body">
+                <div class="float-left mr-2">
+                    <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= Usuario.profileIconId %>.png"
+                        alt="" class="img-fluid img-thumbnail thumb-xl">
+                </div>
+                <div class="float-left mr-2">
+                    <img src="/public/assets/images/elos/EMBLEM_<%= Usuario.detalhes[0].tier %>.png" alt=""
+                        class="img-fluid img-thumbnail thumb-xl">
+                </div>
+                <h5 class="text-primary font-21 mt-0 mb-1"><%= Usuario.name %></h5>
+                <p class="mb-2" style="font-size: 18px">
+                    <%= Usuario.detalhes[0].tier + ' ' + Usuario.detalhes[0].rank %>
+                </p>
+                <p class="mb-4" style="font-size: 18px"> Wins: <%= Usuario.detalhes[0].wins %> / Losses:
+                    <%= Usuario.detalhes[0].losses %></p>
+                <div class="clearfix"></div>
             </div>
-            <div class="float-left mr-2">
-                <img src="/public/assets/images/elos/EMBLEM_<%= Usuario.detalhes[0].tier %>.png" alt=""
-                    class="img-fluid img-thumbnail thumb-xl">
-            </div>
-            <h5 class="text-primary font-21 mt-0 mb-1"><%= Usuario.name %></h5>
-            <p class="mb-2" style="font-size: 18px"><%= Usuario.detalhes[0].tier + ' ' + Usuario.detalhes[0].rank %></p>
-            <p class="mb-4" style="font-size: 18px"> Wins: <%= Usuario.detalhes[0].wins %> / Losses: <%= Usuario.detalhes[0].losses %></p>
-            <div class="clearfix"></div>
         </div>
+    </div>
+    <div class="col-xl-8 col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="mt-0 header-title">Donut Pie</h4>
 
+                <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
+                    <li class="list-inline-item">
+                        <h5 class="mb-0">42</h5>
+                        <p class="text-muted">Wins</p>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="mb-0">47</h5>
+                        <p class="text-muted">Losses</p>
+                    </li>
+                </ul>
+
+                <div id="donut-chart">
+                    <div id="donut-chart-container" class="flot-chart flot-chart-height">
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 <% } %>
+
+<script>
+    $(document).ready(function () {
+        var FlotChart = function () {
+            this.$body = $("body")
+            this.$realData = []
+        };
+
+        //creates Pie Chart
+        FlotChart.prototype.createDonutGraph = function (selector, labels, datas, colors) {
+            var data = [{
+                label: labels[0],
+                data: datas[0]
+            }, {
+                label: labels[1],
+                data: datas[1]
+            }, {
+                label: labels[2],
+                data: datas[2]
+            },
+            {
+                label: labels[3],
+                data: datas[3]
+            }, {
+                label: labels[4],
+                data: datas[4]
+            }
+            ];
+            var options = {
+                series: {
+                    pie: {
+                        show: true,
+                        innerRadius: 0.7
+                    }
+                },
+                legend: {
+                    show: true,
+                    labelFormatter: function (label, series) {
+                        return '<div style="font-size:14px;">&nbsp;' + label + '</div>'
+                    },
+                    labelBoxBorderColor: null,
+                    margin: 50,
+                    width: 20,
+                    padding: 1
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true
+                },
+                colors: colors,
+                tooltip: true,
+                tooltipOpts: {
+                    content: "%s, %p.0%"
+                }
+            };
+
+            $.plot($(selector), data, options);
+        }
+
+        var donutlabels = ["Wins", "Losses"];
+        var donutdatas = [42, 47];
+        var donutcolors = ['#02a499', '#EB4334'];
+        FlotChart.prototype.createDonutGraph("#donut-chart #donut-chart-container", donutlabels, donutdatas, donutcolors);
+    })    
+</script>
