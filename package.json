@@ -23,6 +23,7 @@
     "express-ejs-layouts": "^2.5.0",
     "express-flash-messages": "^0.1.1",
     "express-validator": "^5.3.1",
+    "handy-storage": "^2.1.6",
     "http": "0.0.0",
     "jquery": "^3.5.1",
     "js-datepicker": "^4.0.10",
