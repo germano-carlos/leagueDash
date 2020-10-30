@@ -1,13 +1,20 @@
 var express = require('express');
 var router = express.Router();
 const url = require('url');
+const HandyStorage = require('handy-storage');
 
+const storage = new HandyStorage({
+   beautify: true
+});
+
+storage.connect('./information.json');
 //Import Controllers Here
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 const PartidaController = require('./controller/PartidaController');
 
 router.get('/', function (req, res) {
+
    let localizado = req.query.localizado;
    let id = req.query.id;
    let alertTitle = "";
@@ -17,11 +24,21 @@ router.get('/', function (req, res) {
       localizado = true;
       alertTitle = "Yeei!";
       alertMessage = "Usuário encontrado, Deseja prosseguir?";
+
+      storage.setState({
+         searched: true,
+         id
+      })
+
    }
    else if (localizado == 'false') {
       localizado = false;
       alertTitle = "Erro !";
       alertMessage = "Usuário não encontrado,Tente Novamente";
+      storage.setState({
+         searched: false,
+         id: null
+      })
    }
 
    res.render('Summoner/home', { localizado, alertTitle, alertMessage, id });
@@ -49,7 +66,6 @@ router.get('/invocador/data/:id', async function (req, res) {
    const user = await UsuarioController.getUser(id);
    const Partidas = await PartidaController.store(user);
 
-
    res.render('Dashboard/dashboard', { Partidas });
 })
 
@@ -59,10 +75,20 @@ router.get('/partida/data/:id', async function (req, res) {
 })
 
 router.get('/champion/analise', async function (req, res) {
+   const sessionData = {
+      connected: storage.state.searched,
+      id: storage.state.id ? storage.state.id : null,
+   };
 
    const Campeoes = await CampeaoController.getAll();
+   const Usuario = await UsuarioController.getUserByParametros(sessionData.id);
+   const UserDetails = await UsuarioController.getUserDetails(Usuario.id);
 
-   res.render('Champion/analytics', { Campeoes });
+   if(UserDetails) {
+      Usuario.detalhes = UserDetails;
+   }
+
+   res.render('Champion/analytics', { Campeoes, sessionData, Usuario});
 })
 
 router.get('/campeao/by_id/:key', async function (req, res) {

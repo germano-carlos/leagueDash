@@ -7,7 +7,7 @@
 <%- contentFor('Header') %>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <div style="justify-content: space-between; display: flex; width: 100%;">
-        <a class="navbar-brand" href="/campeao/analise">Análise de Partidas</a>
+        <a class="navbar-brand" id="nav-analise" href="<%= (sessionData.connected) ? "/invocador/data/"+sessionData.id : "/champion/analise"%>">Análise de Partidas</a>
         <a class="navbar-brand" href="#">Fórum</a>
     </div>
 
@@ -20,9 +20,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis qui officiis porro ducimus voluptate
-                iure vitae earum, quaerat distinctio modi neque? Officia unde excepturi, illo ea amet molestiae alias
-                aliquid.
+                <% include ../Partials/SummonerData %>
             </div>
         </div>
     </div>
@@ -46,7 +44,7 @@
 
 
                     <div class="col-xl-3 col-md-4">
-                        <a href="#" data-identificador="<%=id%>" class="campeao-item">
+                        <a style="cursor: pointer;" data-identificador="<%=id%>" class="campeao-item">
                             <div class="card directory-card">
                                 <div class="card-body">
                                     <div class="float-left mr-4">
@@ -205,6 +203,9 @@
                 });
 
 
+        })
+        $('#nav-analise').click(function() {
+            
         })
     })
     

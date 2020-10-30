@@ -42,6 +42,17 @@ module.exports = {
             return findUser;
 
         return null;
+    },
+    async getUserByParametros(id){
+        if(id == null) return;
+        const userLocal = await this.getUser(id);
+
+        if(!userLocal) return;
+        return await Api.obterInvocadorByEncriptedSummonnerId(userLocal.id_riot);
+    },
+    async getUserDetails(encriptedSummonnerId) {
+        console.log(encriptedSummonnerId)
+        return Api.obterEloInvocador(encriptedSummonnerId);
     }
 
 }

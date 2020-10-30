@@ -1,0 +1,8 @@
+{
+    "name": "Alireza",
+    "lastname": "Sh",
+    "friends": [ "Jane", "John" ],
+    "visited": 3,
+    "searched": true,
+    "id": "7"
+}

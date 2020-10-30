@@ -446,6 +446,10 @@ dt {
   width: 88px;
 }
 
+.thumb-xl {
+  height: 180px;
+  width: 180px;
+}
 .font-500 {
   font-weight: 500;
 }

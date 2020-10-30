@@ -1,0 +1,24 @@
+<% if (!sessionData.connected) { %>
+Sem registros até o presente momento. Por favor, volte ao menu principal e faça uma pesquisa de personagem
+<% } 
+else {console.log()%>
+<div class="col-xl-4 col-md-4" style="border: 2px solid red;">
+    <div class="card directory-card">
+        <div class="card-body">
+            <div class="float-left mr-2">
+                <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= Usuario.profileIconId %>.png" alt=""
+                    class="img-fluid img-thumbnail thumb-xl">
+            </div>
+            <div class="float-left mr-2">
+                <img src="/public/assets/images/elos/EMBLEM_<%= Usuario.detalhes[0].tier %>.png" alt=""
+                    class="img-fluid img-thumbnail thumb-xl">
+            </div>
+            <h5 class="text-primary font-21 mt-0 mb-1"><%= Usuario.name %></h5>
+            <p class="mb-2" style="font-size: 18px"><%= Usuario.detalhes[0].tier + ' ' + Usuario.detalhes[0].rank %></p>
+            <p class="mb-4" style="font-size: 18px"> Wins: <%= Usuario.detalhes[0].wins %> / Losses: <%= Usuario.detalhes[0].losses %></p>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+</div>
+<% } %>
