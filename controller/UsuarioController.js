@@ -44,7 +44,7 @@ module.exports = {
         return null;
     },
     async getUserByParametros(id){
-        if(id == null) return;
+        if(typeof id == 'undefined' || id == null) return;
         const userLocal = await this.getUser(id);
 
         if(!userLocal) return;

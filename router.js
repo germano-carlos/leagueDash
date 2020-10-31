@@ -81,12 +81,16 @@ router.get('/champion/analise', async function (req, res) {
    };
 
    const Campeoes = await CampeaoController.getAll();
-   const Usuario = await UsuarioController.getUserByParametros(sessionData.id);
-   const UserDetails = await UsuarioController.getUserDetails(Usuario.id);
+   let Usuario = await UsuarioController.getUserByParametros(sessionData.id);
+   const UserDetails = (typeof Usuario != 'undefined') ? await UsuarioController.getUserDetails(Usuario.id) : false;
 
-   if(UserDetails) {
+  if(UserDetails) {
       Usuario.detalhes = UserDetails;
-   }
+  }
+  else {
+      Usuario = {};
+      Usuario.detalhes = {};
+  }
 
    res.render('Champion/analytics', { Campeoes, sessionData, Usuario});
 })
