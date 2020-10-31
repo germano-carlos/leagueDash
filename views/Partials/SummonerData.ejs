@@ -1,25 +1,41 @@
+<% 
+let iconId = ( sessionData.connected ) ? Usuario.profileIconId : '';
+let tier = ( sessionData.connected ) ? Usuario.detalhes[0].tier : '';
+let nomeInvocador = ( sessionData.connected ) ? Usuario.name : '';
+let rank = ( sessionData.connected ) ? Usuario.detalhes[0].rank : '';
+let wins = ( sessionData.connected ) ? Usuario.detalhes[0].wins : 0;
+let losses = ( sessionData.connected ) ? Usuario.detalhes[0].losses : 0;
+%>
+
 <% if (!sessionData.connected) { %>
-Sem registros até o presente momento. Por favor, volte ao menu principal e faça uma pesquisa de personagem
+<div class="col-12" style="width: 100%;"">
+    <div class="card directory-card">
+        <div class="card-body">
+            Sem registros até o presente momento. Por favor, volte ao menu principal e faça uma pesquisa de personagem
+        </div>
+    </div>
+</div>
+
 <% } 
 else {%>
-<div style="display: flex;">
+<div class="col-12" style="display: flex;">
     <div class="col-xl-4 col-md-4" style="height: 250px;">
         <div class="card directory-card">
             <div class="card-body">
                 <div class="float-left mr-2">
-                    <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= Usuario.profileIconId %>.png"
+                    <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= iconId %>.png"
                         alt="" class="img-fluid img-thumbnail thumb-xl">
                 </div>
                 <div class="float-left mr-2">
-                    <img src="/public/assets/images/elos/EMBLEM_<%= Usuario.detalhes[0].tier %>.png" alt=""
+                    <img src="/public/assets/images/elos/EMBLEM_<%= tier %>.png" alt=""
                         class="img-fluid img-thumbnail thumb-xl">
                 </div>
-                <h5 class="text-primary font-21 mt-0 mb-1"><%= Usuario.name %></h5>
+                <h5 class="text-primary font-21 mt-0 mb-1"><%= nomeInvocador %></h5>
                 <p class="mb-2" style="font-size: 18px">
-                    <%= Usuario.detalhes[0].tier + ' ' + Usuario.detalhes[0].rank %>
+                    <%= tier + ' ' + rank %>
                 </p>
-                <p class="mb-4" style="font-size: 18px"> Wins: <%= Usuario.detalhes[0].wins %> / Losses:
-                    <%= Usuario.detalhes[0].losses %></p>
+                <p class="mb-4" style="font-size: 18px"> Wins: <%= wins %> / Losses:
+                    <%= losses %></p>
                 <div class="clearfix"></div>
             </div>
         </div>
@@ -27,15 +43,15 @@ else {%>
     <div class="col-xl-8 col-md-8">
         <div class="card">
             <div class="card-body">
-                <h4 class="mt-0 header-title">Donut Pie</h4>
+                <h4 class="mt-0 header-title">Gráfico Vitórias / Derrotas</h4>
 
                 <ul class="list-inline widget-chart m-t-20 m-b-15 text-center">
                     <li class="list-inline-item">
-                        <h5 class="mb-0">42</h5>
+                        <h5 class="mb-0"><%= wins %></h5>
                         <p class="text-muted">Wins</p>
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="mb-0">47</h5>
+                        <h5 class="mb-0"><%= losses %></h5>
                         <p class="text-muted">Losses</p>
                     </li>
                 </ul>
@@ -50,7 +66,7 @@ else {%>
     </div>
 </div>
 <% } %>
-<script /*src="../../public/assets/pages/dashboard.js"*/>
+<script /*src="../../public/assets/pages/dashboard.js" */>
 
 $(document).ready(function () {
     var FlotChart = function () {
@@ -110,7 +126,7 @@ $(document).ready(function () {
     }
 
     var donutlabels = ["Wins", "Losses"];
-    var donutdatas = ["<%=Usuario.detalhes[0].wins%>", "<%=Usuario.detalhes[0].wins%>"];
+    var donutdatas = ["<%= wins %>", "<%= losses %>"];
     var donutcolors = ['#02a499', '#EB4334'];
     FlotChart.prototype.createDonutGraph("#donut-chart #donut-chart-container", donutlabels, donutdatas, donutcolors);
 })  

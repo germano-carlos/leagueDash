@@ -16,81 +16,83 @@ module.exports = {
 
         let formatDate = new Date();
         let timeStamp = formatDate.setDate(formatDate.getDate() - 14);
-        
-        const Partidas = await Api.obterPartidas(jsonParams.account_id, timeStamp);
-        let contador = 0;
 
-        const promisse = new Promise(async (resolve, reject) => {
-            await Partidas.forEach(async (element, index) => {
-                if(index < 10)
-                {
-                    var Detalhes = await Api.obterPartidasById(element.gameId);
-                    let lane = element.lane;
-                    let gameMode = Detalhes.data.gameMode;
-                    let gameType = Detalhes.data.gameType;
-                    let gameId = Detalhes.data.gameId;
+        const Partidas = await Api.obterPartidas(jsonParams.account_id, timeStamp)
+                                    .then((data) => { return data; })
+                                    .catch((err) => { return false; });
+        console.log(Partidas)
+        let promisse = new Promise(async (resolve, reject) => { resolve() } );
+        if (Partidas) {
+            console.log('entrou')
+            let contador = 0;
 
-                    let championId = 0;
-                    let win = 0;
-                    let kills = 0;
-                    let deaths = 0;
-                    let assists = 0;
-                    
-                    let participantId = 0;
-                    let achou = false;
-                    let urlImage = "";
+            promisse = new Promise(async (resolve, reject) => {
+                await Partidas.forEach(async (element, index) => {
+                    if (index < 10) {
+                        var Detalhes = await Api.obterPartidasById(element.gameId);
+                        let lane = element.lane;
+                        let gameMode = Detalhes.data.gameMode;
+                        let gameType = Detalhes.data.gameType;
+                        let gameId = Detalhes.data.gameId;
 
-                    for(i=0;i<Detalhes.data.participantIdentities.length && !achou; i++)
-                    {
-                        if(Detalhes.data.participantIdentities[i].player.currentAccountId != jsonParams.account_id)
-                            continue;
-                        
-                        participantId = Detalhes.data.participantIdentities[i].participantId;
-                        achou = true;
+                        let championId = 0;
+                        let win = 0;
+                        let kills = 0;
+                        let deaths = 0;
+                        let assists = 0;
+
+                        let participantId = 0;
+                        let achou = false;
+                        let urlImage = "";
+
+                        for (i = 0; i < Detalhes.data.participantIdentities.length && !achou; i++) {
+                            if (Detalhes.data.participantIdentities[i].player.currentAccountId != jsonParams.account_id)
+                                continue;
+
+                            participantId = Detalhes.data.participantIdentities[i].participantId;
+                            achou = true;
+                        }
+                        achou = false;
+                        for (i = 0; i < Detalhes.data.participants.length && !achou; i++) {
+                            if (Detalhes.data.participants[i].participantId != participantId)
+                                continue;
+
+                            championId = Detalhes.data.participants[i].championId;
+                            win = Detalhes.data.participants[i].stats.win;
+                            kills = Detalhes.data.participants[i].stats.kills;
+                            deaths = Detalhes.data.participants[i].stats.deaths;
+                            assists = Detalhes.data.participants[i].stats.assists;
+                            achou = true;
+
+                            let champion = await Campeao.findOne({ where: { key: championId } });
+                            urlImage = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.nome.replace(" ", "")}_0.jpg`;
+                        }
+
+                        PartidasDetalhes.push({ lane, gameMode, gameType, championId, win, kills, deaths, assists, urlImage, gameId });
+                        if (PartidasDetalhes.length == Partidas.length || contador == 9) {
+                            resolve(PartidasDetalhes)
+                        }
+                        contador++;
                     }
-                    achou = false;
-                    for(i=0;i<Detalhes.data.participants.length && !achou; i++)
-                    {
-                        if(Detalhes.data.participants[i].participantId != participantId)
-                            continue;
-                        
-                        championId = Detalhes.data.participants[i].championId;
-                        win = Detalhes.data.participants[i].stats.win;
-                        kills = Detalhes.data.participants[i].stats.kills;
-                        deaths = Detalhes.data.participants[i].stats.deaths;
-                        assists = Detalhes.data.participants[i].stats.assists;
-                        achou = true;
+                });
+            })
+        }
 
-                        let champion = await Campeao.findOne({where: {key : championId}});
-                        urlImage = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.nome.replace(" ","")}_0.jpg`;
-                    }
-    
-                    PartidasDetalhes.push({lane, gameMode, gameType, championId, win, kills,deaths, assists, urlImage, gameId});
-                    if(PartidasDetalhes.length == Partidas.length || contador == 9)
-                    {
-                        resolve(PartidasDetalhes)
-                    }
-                    contador++;
-                }
-            });
-        })
-
-        return await promisse.then((data) => {return data})
-                             .catch((err) => {console.log('err')});
+        return await promisse.then((data) => { return data })
+                            .catch((err) => { console.log('err') });
 
     },
     async getPartida(id) {
         const Partida = await Api.obterPartidasById(id);
         return Partida;
     },
-    async Detalhes(id)
-    {
+    async Detalhes(id) {
         const Details = await this.getPartida(id);
 
         let playerArray = [];
         let contador = 0;
-        
-        const promisse = await new Promise (async (resolve, reject) => {
+
+        const promisse = await new Promise(async (resolve, reject) => {
             await Details.data.participants.forEach(async (element, index) => {
                 let participantId = element.participantId;
                 let nome = "undefined";
@@ -104,23 +106,19 @@ module.exports = {
                 let goldSpent = element.stats.goldSpent;
                 let champion = await CampeaoController.getChampionByKey(championId);
                 let championName = champion.nome;
-                let urlImage = `http://ddragon.leagueoflegends.com/cdn/10.20.1/img/champion/${championName.replace(" ","")}.png`;
-        
-                playerArray.push({participantId,nome, tier, championId, kill, deaths, assists, win, goldEarned, goldSpent, championName, urlImage});
+                let urlImage = `http://ddragon.leagueoflegends.com/cdn/10.20.1/img/champion/${championName.replace(" ", "")}.png`;
+
+                playerArray.push({ participantId, nome, tier, championId, kill, deaths, assists, win, goldEarned, goldSpent, championName, urlImage });
                 contador++;
-                if(contador == Details.data.participants.length)
-                {
+                if (contador == Details.data.participants.length) {
                     resolve(playerArray);
                 }
             });
         })
 
-        for(k=0;k<playerArray.length;k++)
-        {
-            for(j=0;j<Details.data.participantIdentities.length;j++)
-            {
-                if(playerArray[k].participantId != Details.data.participantIdentities[j].participantId)
-                { continue; }
+        for (k = 0; k < playerArray.length; k++) {
+            for (j = 0; j < Details.data.participantIdentities.length; j++) {
+                if (playerArray[k].participantId != Details.data.participantIdentities[j].participantId) { continue; }
 
                 playerArray[k].nome = Details.data.participantIdentities[j].player.summonerName;
             }
