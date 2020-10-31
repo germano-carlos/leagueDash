@@ -16,15 +16,8 @@
 <%- contentFor('Sidebar') %>
 
 <%- contentFor('body')  %>
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <% include ../Partials/SummonerData %>
-            </div>
-        </div>
-    </div>
-</div>
+<% include ../Partials/SummonerData %>
+
 <hr>
 <div class="col-12" style="display: flex;">
     <div class="col-8">
@@ -120,7 +113,7 @@
 </div>
 <%- contentFor('FooterJs') %>
 <script src="../public/plugins/flot-chart/jquery.flot.min.js"></script>
-        <script src="../public/plugins/flot-chart/jquery.flot.pie.js"></script>
+<script src="../public/plugins/flot-chart/jquery.flot.pie.js"></script>
 <%- contentFor('BottomJs') %>
 
 
@@ -207,7 +200,6 @@
 
         })
         $('#nav-analise').click(function() {
-            
         })
     })
     

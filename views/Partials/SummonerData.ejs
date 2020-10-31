@@ -1,9 +1,9 @@
 <% if (!sessionData.connected) { %>
 Sem registros até o presente momento. Por favor, volte ao menu principal e faça uma pesquisa de personagem
 <% } 
-else {console.log()%>
-<div class="row">
-    <div class="col-xl-4 col-md-4">
+else {%>
+<div style="display: flex;">
+    <div class="col-xl-4 col-md-4" style="height: 250px;">
         <div class="card directory-card">
             <div class="card-body">
                 <div class="float-left mr-2">
@@ -50,68 +50,70 @@ else {console.log()%>
     </div>
 </div>
 <% } %>
+<script /*src="../../public/assets/pages/dashboard.js"*/>
 
-<script>
-    $(document).ready(function () {
-        var FlotChart = function () {
-            this.$body = $("body")
-            this.$realData = []
+$(document).ready(function () {
+    var FlotChart = function () {
+        this.$body = $("body")
+        this.$realData = []
+    };
+
+    //creates Pie Chart
+    FlotChart.prototype.createDonutGraph = function (selector, labels, datas, colors) {
+        var data = [{
+            label: labels[0],
+            data: datas[0]
+        }, {
+            label: labels[1],
+            data: datas[1]
+        }, {
+            label: labels[2],
+            data: datas[2]
+        },
+        {
+            label: labels[3],
+            data: datas[3]
+        }, {
+            label: labels[4],
+            data: datas[4]
+        }
+        ];
+        var options = {
+            series: {
+                pie: {
+                    show: true,
+                    innerRadius: 0.7,
+                },
+            },
+            legend: {
+                show: true,
+                labelFormatter: function (label, series) {
+                    return '<div style="font-size:14px;">&nbsp;' + label + '</div>'
+                },
+                labelBoxBorderColor: null,
+                margin: 20,
+                width: 20,
+                padding: 1
+            },
+            grid: {
+                hoverable: true,
+                clickable: true
+            },
+            colors: colors,
+            tooltip: true,
+            tooltipOpts: {
+                content: "%s, %p.0%"
+            }
         };
 
-        //creates Pie Chart
-        FlotChart.prototype.createDonutGraph = function (selector, labels, datas, colors) {
-            var data = [{
-                label: labels[0],
-                data: datas[0]
-            }, {
-                label: labels[1],
-                data: datas[1]
-            }, {
-                label: labels[2],
-                data: datas[2]
-            },
-            {
-                label: labels[3],
-                data: datas[3]
-            }, {
-                label: labels[4],
-                data: datas[4]
-            }
-            ];
-            var options = {
-                series: {
-                    pie: {
-                        show: true,
-                        innerRadius: 0.7
-                    }
-                },
-                legend: {
-                    show: true,
-                    labelFormatter: function (label, series) {
-                        return '<div style="font-size:14px;">&nbsp;' + label + '</div>'
-                    },
-                    labelBoxBorderColor: null,
-                    margin: 50,
-                    width: 20,
-                    padding: 1
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true
-                },
-                colors: colors,
-                tooltip: true,
-                tooltipOpts: {
-                    content: "%s, %p.0%"
-                }
-            };
+        $.plot($(selector), data, options);
+    }
 
-            $.plot($(selector), data, options);
-        }
+    var donutlabels = ["Wins", "Losses"];
+    var donutdatas = ["<%=Usuario.detalhes[0].wins%>", "<%=Usuario.detalhes[0].wins%>"];
+    var donutcolors = ['#02a499', '#EB4334'];
+    FlotChart.prototype.createDonutGraph("#donut-chart #donut-chart-container", donutlabels, donutdatas, donutcolors);
+})  
 
-        var donutlabels = ["Wins", "Losses"];
-        var donutdatas = [42, 47];
-        var donutcolors = ['#02a499', '#EB4334'];
-        FlotChart.prototype.createDonutGraph("#donut-chart #donut-chart-container", donutlabels, donutdatas, donutcolors);
-    })    
+
 </script>
