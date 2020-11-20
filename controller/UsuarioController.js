@@ -53,6 +53,26 @@ module.exports = {
     async getUserDetails(encriptedSummonnerId) {
         console.log(encriptedSummonnerId)
         return Api.obterEloInvocador(encriptedSummonnerId);
-    }
+    },
+    async getLiga(user) {
+        let liga = await Api.obterLeagueIdByEncriptedSummonnerId(user.id);
+        let detailsLiga;
+        if(liga[0].leagueId != null) detailsLiga = await Api.obterInvocadoresByLeagueId(liga[0].leagueId);
+        else  detailsLiga = null;
+
+        const fullLeague = {
+            leagueName: detailsLiga.name,
+            leagueId: liga[0].leagueId ? liga[0].leagueId : null,
+            mainSummonner: liga[0].summonerName ? liga[0].summonerName : null,
+            mainRank: (liga[0].tier) ? liga[0].tier : null,
+            participants: detailsLiga.entries.sort(ordernarPDL).reverse()
+        };
+
+        function ordernarPDL(a, b){
+            return a.leaguePoints - b.leaguePoints;
+        }
+
+        return fullLeague;
+    },
 
 }
