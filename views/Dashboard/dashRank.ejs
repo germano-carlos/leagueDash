@@ -1,0 +1,86 @@
+<%- contentFor('HeaderCss') %>
+<!--Chartist Chart CSS -->
+<!-- DataTables -->
+<link href="../../public/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="../../public/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<!-- Responsive datatable examples -->
+<link href="../../public/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<!-- perticular page css -->
+
+<%- contentFor('HeaderStyle') %>
+<% include ../Partials/HeaderStyle  %>
+<%- contentFor('Header') %>
+<% include ../Partials/Header  %>
+<%- contentFor('Sidebar') %>
+<% include ../Partials/Sidebar  %>
+<%- contentFor('body')  %>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h1 class="mt-0"><%= Details.leagueName + ' - ' + Details.mainRank %></h1>
+                <p style="font-size:16px;"> Abaixo você conseguirá visualizar sua liga e seus concorrentes. Consiga 100
+                    PDL para ter a chance de ser promovido </p>
+
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap"
+                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Invocador Nome</th>
+                            <th>Invocador Rank</th>
+                            <th>PDL</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody id="person-rank">
+                        <% if (Details) {
+                            for( var index = 0; index < Details.participants.length; index++ ) {
+                                
+                            %>
+                        <tr>
+                            <td><%= index + (1*1.0)%></td>
+                            <td><%= Details.participants[index].summonerName %></td>
+                            <td><%= Details.participants[index].rank %></td>
+                            <td><%= Details.participants[index].leaguePoints %></td>
+                        </tr>
+                        <% 
+                        }
+                    } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->
+
+<%- contentFor('FooterJs') %>
+<%- contentFor('BottomJs') %>
+<!-- Required datatable js -->
+<script src="../../public/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../public/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="../../public/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="../../public/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="../../public/plugins/datatables/jszip.min.js"></script>
+<script src="../../public/plugins/datatables/pdfmake.min.js"></script>
+<script src="../../public/plugins/datatables/vfs_fonts.js"></script>
+<script src="../../public/plugins/datatables/buttons.html5.min.js"></script>
+<script src="../../public/plugins/datatables/buttons.print.min.js"></script>
+<script src="../../public/plugins/datatables/buttons.colVis.min.js"></script>
+<!-- Datatable init js -->
+<script src="../../public/assets/pages/datatables.init.js"></script>
+
+<style>
+    .content-page {
+        margin-left: 400px;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    
+
+</script>

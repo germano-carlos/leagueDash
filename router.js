@@ -62,11 +62,17 @@ router.post('/invocador/status', async function (req, res) {
 })
 
 router.get('/invocador/data/:id', async function (req, res) {
+
+   let sessionData = {
+      connected: storage.state.searched,
+      id: storage.state.id ? storage.state.id : null,
+   };
+
    const id = req.params.id;
    const user = await UsuarioController.getUser(id);
    const Partidas = await PartidaController.store(user);
 
-   res.render('Dashboard/dashboard', { Partidas });
+   res.render('Dashboard/dashboard', { Partidas, sessionData });
 })
 
 router.get('/partida/data/:id', async function (req, res) {
@@ -106,5 +112,14 @@ router.get('/campeao/by_id/:key', async function (req, res) {
 
    return res.json(Campeao);
 })
+
+router.get('/rank/summoner/:key', async function (req, res) {
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+   let Usuario = await UsuarioController.getUserByParametros(sessionData.id);
+   let Details = await UsuarioController.getLiga(Usuario);
+
+   res.render('Dashboard/dashRank', { Details, sessionData });
+})
+
 
 module.exports = router;
