@@ -121,5 +121,35 @@ router.get('/rank/summoner/:key', async function (req, res) {
    res.render('Dashboard/dashRank', { Details, sessionData });
 })
 
+router.get('/forum', async function(req, res) {
+   res.render('Authenticator/login', {success:undefined, id:false});
+})
+
+router.post('/forum/conectar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const password = req.body.userpassword;
+
+   const User = await UsuarioController.getUserBySummonerName(userName);
+   let success;
+   let id;
+
+   if(User && (User.password == password)) {
+      success = true;
+      id = User.id;
+   }
+   else{
+      success = false;
+      id = false;
+   }
+      
+   res.render('Authenticator/login', {success, id});
+})
+
+router.get('/forum/data/:id', async function(req, res) {
+   const id = req.params.key;
+   res.render('Forum/home');
+})
+
 
 module.exports = router;

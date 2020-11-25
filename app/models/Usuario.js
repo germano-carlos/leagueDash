@@ -8,7 +8,8 @@ class Usuario extends Model {
             puuid: DataTypes.STRING,
             nome: DataTypes.STRING,
             icone_id: DataTypes.INTEGER,
-            invocador_level: DataTypes.INTEGER
+            invocador_level: DataTypes.INTEGER,
+            password: DataTypes.STRING
         }, {
             timestamps: false,
             sequelize

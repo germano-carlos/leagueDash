@@ -51,7 +51,6 @@ module.exports = {
         return await Api.obterInvocadorByEncriptedSummonnerId(userLocal.id_riot);
     },
     async getUserDetails(encriptedSummonnerId) {
-        console.log(encriptedSummonnerId)
         return Api.obterEloInvocador(encriptedSummonnerId);
     },
     async getLiga(user) {
@@ -74,5 +73,8 @@ module.exports = {
 
         return fullLeague;
     },
+    async getUserBySummonerName(summonerName) {
+        return await Usuario.findOne({ where: { nome: summonerName } });
+    }
 
 }
