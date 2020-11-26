@@ -8,27 +8,27 @@ Usuario.init(connection);
 
 module.exports = {
 
-    async store(jsonParams) {
+    async store(jsonParams, forum = false) {
 
         const invocador = await Api.obterInvocador(jsonParams)
-                                    .then((data) => { return data} )
-                                    .catch((err) => { return null } );
-        console.log(invocador);
-        if(invocador)
+            .then((data) => { return data })
+            .catch((err) => { return null });
+
+        if (invocador)
             var findUser = await Usuario.findOne({ where: { id_riot: invocador.id } });
         else
-            return null
-        
-        if (invocador && !findUser)
-        {
+            return null;
+
+        if (invocador && !findUser) {
             const user = await Usuario.create({
-                            id_riot: invocador.id,
-                            account_id: invocador.accountId,
-                            puuid: invocador.puuid,
-                            nome: invocador.name,
-                            icone_id: invocador.profileIconId,
-                            invocador_level: invocador.summonerLevel
-                        });
+                id_riot: invocador.id,
+                account_id: invocador.accountId,
+                puuid: invocador.puuid,
+                nome: invocador.name,
+                icone_id: invocador.profileIconId,
+                invocador_level: invocador.summonerLevel,
+                forum: (forum) ? 'S' : 'N'
+            });
             return user;
         }
 
@@ -43,11 +43,11 @@ module.exports = {
 
         return null;
     },
-    async getUserByParametros(id){
-        if(typeof id == 'undefined' || id == null) return;
+    async getUserByParametros(id) {
+        if (typeof id == 'undefined' || id == null) return;
         const userLocal = await this.getUser(id);
 
-        if(!userLocal) return;
+        if (!userLocal) return;
         return await Api.obterInvocadorByEncriptedSummonnerId(userLocal.id_riot);
     },
     async getUserDetails(encriptedSummonnerId) {
@@ -56,8 +56,8 @@ module.exports = {
     async getLiga(user) {
         let liga = await Api.obterLeagueIdByEncriptedSummonnerId(user.id);
         let detailsLiga;
-        if(liga[0].leagueId != null) detailsLiga = await Api.obterInvocadoresByLeagueId(liga[0].leagueId);
-        else  detailsLiga = null;
+        if (liga[0].leagueId != null) detailsLiga = await Api.obterInvocadoresByLeagueId(liga[0].leagueId);
+        else detailsLiga = null;
 
         const fullLeague = {
             leagueName: detailsLiga.name,
@@ -67,14 +67,32 @@ module.exports = {
             participants: detailsLiga.entries.sort(ordernarPDL).reverse()
         };
 
-        function ordernarPDL(a, b){
+        function ordernarPDL(a, b) {
             return a.leaguePoints - b.leaguePoints;
         }
 
         return fullLeague;
     },
-    async getUserBySummonerName(summonerName) {
-        return await Usuario.findOne({ where: { nome: summonerName } });
+    async getUserBySummonerName(summonerName) { return await Usuario.findOne({ where: { nome: summonerName } }); },
+    async addForum(form) {
+        let output;
+        let User = await Usuario.findOne({ where: { nome: form.userName } });
+
+        if (!User) { User = await this.store({ nomeInvocador: form.userName }, true ); }
+        if (!User) { return false; }
+
+        if(User.password == null) {
+            await Usuario.update(
+                { forum: 'S', password: form.userPassword },
+                { where: { id: User.id } }
+            ).then(result => { output = User })
+            .catch((err) => {output = false})
+        }
+        else {
+            return false;
+        }
+
+        return output;
     }
 
 }

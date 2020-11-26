@@ -9,7 +9,10 @@ class Usuario extends Model {
             nome: DataTypes.STRING,
             icone_id: DataTypes.INTEGER,
             invocador_level: DataTypes.INTEGER,
-            password: DataTypes.STRING
+            password: DataTypes.STRING,
+            forum: DataTypes.ENUM({
+                values: ['S', 'N']
+              })
         }, {
             timestamps: false,
             sequelize

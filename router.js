@@ -125,6 +125,10 @@ router.get('/forum', async function(req, res) {
    res.render('Authenticator/login', {success:undefined, id:false});
 })
 
+router.get('/autenticacao/registrar', async function(req, res) {
+   res.render('Authenticator/registrar', {sucess:undefined, id:false});
+})
+
 router.post('/forum/conectar', async function(req, res) {
    
    const userName = req.body.username;
@@ -137,6 +141,10 @@ router.post('/forum/conectar', async function(req, res) {
    if(User && (User.password == password)) {
       success = true;
       id = User.id;
+
+      storage.setState({
+         forum: true
+      })
    }
    else{
       success = false;
@@ -145,6 +153,36 @@ router.post('/forum/conectar', async function(req, res) {
       
    res.render('Authenticator/login', {success, id});
 })
+
+router.post('/forum/registrar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const userPassword = req.body.userpassword;
+   const passwordCheck = req.body.checkpassword;
+   let sucess = false;
+   let id;
+
+   if(userPassword == passwordCheck)
+   {
+      const Usuario = await UsuarioController.addForum({userName,userPassword});
+
+      if(Usuario) {
+         sucess = true;
+         id = Usuario.id;
+
+         storage.setState({
+            forum: true
+         })
+      }
+   }
+   else {
+      sucess = 'A senha e a contrasenha não coincidem';
+   }
+
+   
+   res.render('Authenticator/registrar', {sucess, id});
+})
+
 
 router.get('/forum/data/:id', async function(req, res) {
    const id = req.params.key;

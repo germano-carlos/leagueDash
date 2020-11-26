@@ -15,42 +15,63 @@
         
         <div class="bg-primary p-4 text-white text-center position-relative">
             <h4 class="font-20 m-b-5">Bem Vindo ao Fórum - League Dash</h4>
-            <p class="text-white-50 mb-4">Faça Login para Entrar em nosso fórum</p>
+            <p class="text-white-50 mb-4">Faça seu Registro para conseguir se conectar</p>
         </div>
         <div class="account-card-content"> 
 
-            <form class="form-horizontal m-t-30" action="index.html">
+            <form class="form-horizontal m-t-30" action="/forum/registrar" method="POST">
 
                 <div class="form-group">
                     <label for="username">Usuário</label>
-                    <input type="text" class="form-control" id="username" placeholder="Insira seu nome de usuário/invocador">
+                    <input type="text" class="form-control" name="username" placeholder="Insira seu nome de usuário/invocador">
                 </div>
 
                 <div class="form-group">
                     <label for="userpassword">Senha</label>
-                    <input type="password" class="form-control" id="userpassword" placeholder="Insira sua senha">
+                    <input type="password" class="form-control" name="userpassword" placeholder="Insira sua senha">
+                </div>
+
+                <div class="form-group">
+                    <label for="check-password">Repetir Senha</label>
+                    <input type="password" class="form-control" name="checkpassword" placeholder="Insira sua senha">
                 </div>
 
                 <div class="form-group row m-t-20">
                     <div class="col-sm-12 text-right">
-                        <button class="btn btn-primary w-md waves-effect waves-light" style="width: 100%" type="submit">Entrar</button>
+                        <button class="btn btn-primary w-md waves-effect waves-light" style="width: 100%" type="submit">Registrar</button>
                     </div>
                 </div>
 
-                <div class="form-group m-t-10 mb-0 row">
-                    <div class="col-12 m-t-20">
-                        <a href="/autenticacao/recuperar"><i class="mdi mdi-lock"></i> Esqueceu sua senha ? </a>
-                    </div>
-                </div>
             </form>
 
         </div>
     </div>
 
     <div class="m-t-40 text-center">
-        <p>Não possui uma conta ? <a href="/autenticacao/registrar" class="font-500 text-primary"> Registrar Agora</a> </p>
+        <p>Já possui uma conta? <a href="/forum" class="font-500 text-primary"> Faça Login Agora</a> </p>
     </div>
-
+    <% if (sucess && typeof sucess != 'undefined' && sucess != 'A senha e a contrasenha não coincidem') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                swal("Registro Realizado Sucesso", "Cadastro Realizado! Conte até 3 e você será redirecionado", "success");
+                setTimeout(function(){ window.location.href = "/forum/data/"+"<%= id %>"; }, 2500);
+            })
+        </script>
+    <% } %>
+    <% if (!sucess && typeof sucess != 'undefined' && sucess != 'A senha e a contrasenha não coincidem') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                swal("Algo deu errado!", "Usuário não encontrado ou já pre-existente em nosso fórum", "error");
+            })
+        </script>
+    <% } %>
+    <% if (typeof sucess != 'undefined' && sucess == 'A senha e a contrasenha não coincidem') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                swal("Informações Incorretas", "A senha e a contrasenha não coincidem", "error");
+            })
+        </script>
+    <% } %>
 </div>
 <%- contentFor('FooterJs') %>
 <%- contentFor('BottomJs') %>
@@ -68,6 +89,6 @@
     }
     body 
     {
-        background-color: #110a0a;
+        background-color: #343a40;
     }
 </style>
