@@ -1,0 +1,157 @@
+<%- contentFor('HeaderCss') %>
+<%- contentFor('HeaderStyle') %>
+<% include ../Partials/HeaderStyle  %>
+<%- contentFor('Header') %>
+<% include ../Partials/Header  %>
+<%- contentFor('Sidebar') %>
+<% include ../Partials/Sidebar  %>
+<%- contentFor('body')  %>
+<br>
+<a title="Criar um novo tópico" href="#" data-toggle="modal" data-target=".bs-example-modal-xl"><i
+        class="fas fa-plus-circle fa-5x"></i></a>
+<br><br><br><br>
+<a class="cards" style="cursor: pointer;">
+    <div class="card mb-3" id="card-partida-<%=1%>">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+
+<a class="cards" style="cursor: pointer;">
+    <div class="card mb-3" id="card-partida-<%=1%>">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+<a class="cards" style="cursor: pointer;">
+    <div class="card mb-3" id="card-partida-<%=1%>">
+        <div class="row no-gutters">
+            <div class="col-md-3">
+                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"> text </p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+
+<!--  Modal content for the above example -->
+<div class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog" id="myModalTopic"
+    aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myExtraLargeModalLabel"> Fórum - Criar um Novo Tópico</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="idTask">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="validationCustom01">Título</label>
+                            <input type="text" class="form-control" name="topicName"
+                                placeholder="Insira um título para o seu tópico" required>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="validationCustom01">Categoria</label>
+                            <select class="form-control catTopic">
+                                <option value="OFF"> -- Selecione a Categoria -- </option>
+                                <option value="Bug"> Bug </option>
+                                <option value="Inovação"> Inovação </option>
+                                <option value="Patch Recente"> Patch Recente </option>
+                                <option value="Dúvidas"> Dúvidas </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="validationCustom03">Descreva sobre</label>
+                            <textarea class="form-control" id="topicContent"
+                                placeholder="Insira o conteudo do seu tópico aqui" id="" cols="30" rows="5"
+                                required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary edit" id="topic-create" type="submit" style="width: 100%;">Criar novo
+                    tópico</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<%- contentFor('FooterJs') %>
+<%- contentFor('BottomJs') %>
+<style>
+    .content-page {
+        margin-left: 400px;
+        overflow: hidden;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('#topic-create').click(function () {
+            let title = $('input[name=topicName]').val();
+            let categoria = $(".catTopic option:selected").val();
+            let conteudo = $('#topicContent').val();
+
+            if (title == '' || conteudo == '' || categoria == 'OFF') swal("Informações Faltantes", "Por favor preencha o formulário completo para registro", "error");
+            else {
+                $.ajax({
+                    type: 'POST',
+                    cache: false,
+                    contentType: 'application/json',
+                    data: JSON.stringify({ title, conteudo, categoria }),
+                    url: 'http://localhost:5000/forum/topico/criar',
+                    success: function() {
+                        alert('tetes')
+                    }
+                }).then((data) => {
+                    alert('entrou')
+                    if(data) { swal("Tópico criado com sucesso", "Parabéns, em breve você conseguirá visualizar e interagir com os demais usuários", "success") };
+                });
+            }
+        })
+
+
+    })
+
+</script>
+<!-- nothing -->

@@ -12,6 +12,7 @@ storage.connect('./information.json');
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 const PartidaController = require('./controller/PartidaController');
+const ForumController = require('./controller/ForumController');
 
 router.get('/', function (req, res) {
 
@@ -121,5 +122,88 @@ router.get('/rank/summoner/:key', async function (req, res) {
    res.render('Dashboard/dashRank', { Details, sessionData });
 })
 
+router.get('/forum', async function(req, res) {
+   res.render('Authenticator/login', {success:undefined, id:false});
+})
+
+router.get('/autenticacao/registrar', async function(req, res) {
+   res.render('Authenticator/registrar', {sucess:undefined, id:false});
+})
+
+router.post('/forum/conectar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const password = req.body.userpassword;
+
+   const User = await UsuarioController.getUserBySummonerName(userName);
+   let success;
+   let id;
+
+   if(User && (User.password == password)) {
+      success = true;
+      id = User.id;
+
+      storage.setState({
+         forum: true
+      })
+   }
+   else{
+      success = false;
+      id = false;
+   }
+      
+   res.render('Authenticator/login', {success, id});
+})
+
+router.post('/forum/registrar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const userPassword = req.body.userpassword;
+   const passwordCheck = req.body.checkpassword;
+   let sucess = false;
+   let id;
+
+   if(userPassword == passwordCheck)
+   {
+      const Usuario = await UsuarioController.addForum({userName,userPassword});
+
+      if(Usuario) {
+         sucess = true;
+         id = Usuario.id;
+
+         storage.setState({
+            forum: true
+         })
+      }
+   }
+   else {
+      sucess = 'A senha e a contrasenha não coincidem';
+   }
+
+   
+   res.render('Authenticator/registrar', {sucess, id});
+})
+
+
+router.get('/forum/data/:id', async function(req, res) {
+   const id = req.params.key;
+
+
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   res.render('Forum/home', {sessionData});
+})
+
+router.post('/forum/topico/criar', async function(req, res) {
+   const title = req.body.title;
+   const categoria = req.body.categoria;
+   const conteudo = req.body.conteudo;
+
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   const Topico = await ForumController.store({title, categoria, id: sessionData.id, conteudo});
+
+   return Topico;
+})
 
 module.exports = router;
