@@ -186,7 +186,10 @@ router.post('/forum/registrar', async function(req, res) {
 
 router.get('/forum/data/:id', async function(req, res) {
    const id = req.params.key;
-   res.render('Forum/home');
+
+
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+   res.render('Forum/home', {sessionData});
 })
 
 
