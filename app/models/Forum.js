@@ -8,7 +8,9 @@ class Forum extends Model {
                 type: DataTypes.INTEGER
             },
             title: DataTypes.STRING,
+            conteudo: DataTypes.TEXT,
             usuario_id: DataTypes.INTEGER,
+            categoria: DataTypes.STRING,
             data_criacao: DataTypes.DATE,
             data_ult_atualizacao: DataTypes.DATE,
             ativo_web: DataTypes.ENUM({

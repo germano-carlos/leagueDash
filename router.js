@@ -12,6 +12,7 @@ storage.connect('./information.json');
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 const PartidaController = require('./controller/PartidaController');
+const ForumController = require('./controller/ForumController');
 
 router.get('/', function (req, res) {
 
@@ -189,8 +190,20 @@ router.get('/forum/data/:id', async function(req, res) {
 
 
    let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
    res.render('Forum/home', {sessionData});
 })
 
+router.post('/forum/topico/criar', async function(req, res) {
+   const title = req.body.title;
+   const categoria = req.body.categoria;
+   const conteudo = req.body.conteudo;
+
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   const Topico = await ForumController.store({title, categoria, id: sessionData.id, conteudo});
+
+   return Topico;
+})
 
 module.exports = router;
