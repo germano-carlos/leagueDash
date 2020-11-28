@@ -13,14 +13,16 @@
 
 <% if (allTopics) { 
     for( var index = 0; index < allTopics.length; index++ ) {
+         let id = allTopics[index].id;
          let title = allTopics[index].title;
          let conteudo = allTopics[index].conteudo.substring(0,60);
          let categoria = allTopics[index].categoria;
          let dataCriacao = allTopics[index].data_criacao;
          let dataAtualizao = allTopics[index].data_ult_atualizacao;
          let iconId = allTopics[index].iconId;
+         let usuarioNome = allTopics[index].usuarioNome;
     %>
-<a class="cards" style="cursor: pointer;">
+<a class="cards" style="cursor: pointer;" data-id="<%= id %>" data-summonner="<%= usuarioNome %>">
     <div class="card mb-3" id="card-partida-<%=1%>">
         <div class="row no-gutters">
             <div class="col-md-2">
@@ -91,6 +93,37 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<input type="hidden" id="message" data-toggle="modal" data-target=".messages">
+<!--  Modal content for the above example -->
+<div class="modal fade bs-example-modal-xl messages" tabindex="-1" role="dialog" id="myModalTopic" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="modaltitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                
+                <div class="card mb-3" style="background-color: #6c757d;">
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <p class="card-text"><small class="text-muted">Last updated in teste</small></p>
+                            </div>
+                        </div>
+                </div>
+
+
+               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
 <%- contentFor('FooterJs') %>
 <%- contentFor('BottomJs') %>
 <style>
@@ -126,8 +159,110 @@
                 });
             }
         })
+        
 
+        $('#teste').click(function() {
+            alert('teste');
+        })
 
+        $('.cards').click(function() {
+            let identificador = $(this).data('id');
+            let summonner = $(this).data('summonner');
+            $('#message').trigger('click');
+            
+            $.ajax({
+                type: 'GET',
+                cache: false,
+                contentType: 'application/json',
+                url: 'http://localhost:5000/forum/topico/'+identificador,
+                error: function (result) { 
+                    console.log("Deu Ruim ai Amigo"); 
+                }}).then((data) => {
+                    let title = $('#modaltitle');
+                    let firstMessage = `<div class="card mb-3" style="background-color: #BEF5FA;">
+                                                <div class="col-md-10">
+                                                    <div class="card-body">
+                                                        <p class="card-text"> [Usuário] ${summonner}: ${data.conteudo}</p>
+                                                        <p class="card-text"><small class="text-muted">22/05 11:00</small></p>
+                                                    </div>
+                                                </div>
+                                        </div>`;
+                    let content = '';
+                    
+
+                    // Percorrer as mensagens
+                    $.ajax({
+                        type: 'GET',
+                        cache: false,
+                        contentType: 'application/json',
+                        url: 'http://localhost:5000/forum/topico/mensagens/'+identificador,
+                        error: function (result) {
+                            console.log(result)
+                            swal("Houve um erro", "Tente novamente mais tarde", "error");
+                        },
+                        success: function (result) {
+                        
+                        result.forEach(element => {
+                            content += `<div class="card mb-3" style="background-color: #BEF5FA;">
+                                                <div class="col-md-10">
+                                                    <div class="card-body">
+                                                        <p class="card-text"> [Usuário] ${element.usuarioNome}: ${element.conteudo}</p>
+                                                        <p class="card-text"><small class="text-muted">${element.data_criacao}</small></p>
+                                                    </div>
+                                                </div>
+                                        </div>`;
+                        });
+
+                        let textArea = `<textarea name="message" id="textmessage" cols="30" rows="7" style="width: 100%;"></textarea>
+                                        <button class="btn btn-primary" style="width: 100%;" id="sendMessage"> Responder Tópico </button>`;
+                        let otherMessages = `<div id="other">${content}</div>`;
+                        let body = $('#modal-body');
+
+                        body.html(firstMessage + otherMessages + textArea);
+                        title.html(`Histórico de Conversa - Fórum ${data.title}`);
+
+                        $('#sendMessage').click(function() {
+
+                            let conteudo = $('#textmessage').val();
+
+                            $.ajax({
+                                type: 'POST',
+                                cache: false,
+                                contentType: 'application/json',
+                                data: JSON.stringify({ conteudo, topicoId:identificador }),
+                                url: 'http://localhost:5000/forum/topico/responder',
+                                error: function (result) {
+                                    console.log(result)
+                                    swal("Mensagem não Enviada", "Houve um erro no momento do envio da mensagem, por favor tente novamente", "error");
+                                },
+                                success: function (result) {
+                                    swal("Mensagem Enviada", "Obrigado por contribuir em nosso fórum", "success");
+                                    let htmlMessages = $('#other');
+                                    htmlMessages.append(`<div class="card mb-3" style="background-color: #BEF5FA;">
+                                                                    <div class="col-md-10">
+                                                                        <div class="card-body">
+                                                                            <p class="card-text"> [Usuário] <%= User.nome %> : ${result.conteudo}</p>
+                                                                            <p class="card-text"><small class="text-muted">Escrito em ${result.data_criacao}</small></p>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>`);
+                                }
+                            })
+                        })
+                    }
+                })
+            });
+
+                
+        });
+
+        function buscaMensagens(identificador)
+        {
+            let output = false;
+            
+
+            return output;
+        }
     })
 
 </script>

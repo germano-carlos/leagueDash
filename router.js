@@ -13,6 +13,7 @@ const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 const PartidaController = require('./controller/PartidaController');
 const ForumController = require('./controller/ForumController');
+const MensagemController = require('./controller/MensagemController');
 
 router.get('/', function (req, res) {
 
@@ -186,12 +187,14 @@ router.post('/forum/registrar', async function(req, res) {
 
 
 router.get('/forum/data/:id', async function(req, res) {
-   const id = req.params.key;
+   const id = req.params.id;
    let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
    let allTopics = await ForumController.getAll();
 
-   
-   res.render('Forum/home', {sessionData, allTopics});
+
+   let User = await UsuarioController.getUser(id);
+
+   res.render('Forum/home', {sessionData, allTopics, User});
 })
 
 router.post('/forum/topico/criar', async function(req, res) {
@@ -206,4 +209,26 @@ router.post('/forum/topico/criar', async function(req, res) {
    return Topico;
 })
 
+router.get('/forum/topico/:id', async function(req,res) {
+   let id = req.params.id;
+   let teste = await ForumController.getId(id);
+   return res.json(teste);
+})
+
+router.post('/forum/topico/responder', async function(req,res) {
+   let mensagem = req.body.conteudo;
+   let topicoId = req.body.topicoId;
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   const Mensagem = await MensagemController.store({mensagem, topicoId, id:sessionData.id});
+
+   return res.json(Mensagem);
+})
+
+router.get('/forum/topico/mensagens/:identificador', async function(req, res) {
+   const id = req.params.identificador;
+
+   const ListMessages = await MensagemController.getAllByTopicId(id);
+   return res.json(ListMessages);
+})
 module.exports = router;

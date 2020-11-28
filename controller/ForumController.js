@@ -36,16 +36,19 @@ module.exports = {
             let usuario = await UsuarioController.getUser(Foruns[i].usuario_id);
             
             let object = {
+                id: Foruns[i].id,
                 title : Foruns[i].title,
                 conteudo : Foruns[i].conteudo,
                 categoria : Foruns[i].categoria,
                 data_criacao : Foruns[i].data_criacao,
                 data_ult_atualizacao : Foruns[i].data_ult_atualizacao,
-                iconId : usuario.icone_id
+                iconId : usuario.icone_id,
+                usuarioNome : usuario.nome
             };
             objects.push(object);
         }
         
         return objects;
-    }
+    },
+    async getId(id) { return await Forum.findByPk(id); }
 }
