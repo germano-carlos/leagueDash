@@ -120,7 +120,7 @@ for( var index = 0; index < Partidas.length; index++ ) {
                 type: 'GET',
                 cache: false,
                 contentType: 'application/json',
-                url: 'http://leaguedash.herokuapp.com/partida/data/'+idPartida,
+                url: 'http://localhost:5000/partida/data/'+idPartida,
                 error: function (result) { 
                     console.log("Deu Ruim ai Amigo"); 
                 }}).then((data) => {

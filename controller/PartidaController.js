@@ -131,26 +131,27 @@ module.exports = {
         return playerArray;
     },
     async adicionaLocal(object, idInvocador) {
-        console.log(idInvocador)
-        for(let i=0; i < object.length; i++)
-        {
-            var findMatch = await Partida.findOne({ where: { game_id: object[i].gameId } })
-
-            if(!findMatch)
+        if(object != null) {
+            for(let i=0; i < object.length; i++)
             {
-                let part = await Partida.create({
-                                lane: object[i].lane,
-                                game_mode:object[i].gameMode,
-                                game_type:object[i].gameType,
-                                champion_id:object[i].championId,
-                                win: (object[i].win) ? 'S' : 'N',
-                                kills: object[i].kills,
-                                deaths: object[i].deaths,
-                                assists: object[i].assists,
-                                game_id:object[i].gameId,
-                                data_criacao: new Date(),
-                                usuario_id: idInvocador
-                            })
+                var findMatch = await Partida.findOne({ where: { game_id: object[i].gameId } })
+    
+                if(!findMatch)
+                {
+                    let part = await Partida.create({
+                                    lane: object[i].lane,
+                                    game_mode:object[i].gameMode,
+                                    game_type:object[i].gameType,
+                                    champion_id:object[i].championId,
+                                    win: (object[i].win) ? 'S' : 'N',
+                                    kills: object[i].kills,
+                                    deaths: object[i].deaths,
+                                    assists: object[i].assists,
+                                    game_id:object[i].gameId,
+                                    data_criacao: new Date(),
+                                    usuario_id: idInvocador
+                                })
+                }
             }
         }
     }
