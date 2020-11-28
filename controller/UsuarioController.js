@@ -93,6 +93,9 @@ module.exports = {
         }
 
         return output;
+    },
+    async getIconeId(id) {
+        return await this.getUser(id);
     }
 
 }

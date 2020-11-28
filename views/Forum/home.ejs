@@ -10,59 +10,36 @@
 <a title="Criar um novo tópico" href="#" data-toggle="modal" data-target=".bs-example-modal-xl"><i
         class="fas fa-plus-circle fa-5x"></i></a>
 <br><br><br><br>
-<a class="cards" style="cursor: pointer;">
-    <div class="card mb-3" id="card-partida-<%=1%>">
-        <div class="row no-gutters">
-            <div class="col-md-3">
-                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</a>
 
+<% if (allTopics) { 
+    for( var index = 0; index < allTopics.length; index++ ) {
+         let title = allTopics[index].title;
+         let conteudo = allTopics[index].conteudo.substring(0,60);
+         let categoria = allTopics[index].categoria;
+         let dataCriacao = allTopics[index].data_criacao;
+         let dataAtualizao = allTopics[index].data_ult_atualizacao;
+         let iconId = allTopics[index].iconId;
+    %>
 <a class="cards" style="cursor: pointer;">
     <div class="card mb-3" id="card-partida-<%=1%>">
         <div class="row no-gutters">
-            <div class="col-md-3">
-                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
+            <div class="col-md-2">
+                <img src="http://ddragon.leagueoflegends.com/cdn/10.22.1/img/profileicon/<%= iconId %>.png"
+                        alt="" class="img-fluid img-thumbnail thumb-xl">
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <div class="card-body">
-                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title"> [FORUM][<%= categoria %>] : <%= title %> </h5>
+                    <p class="card-text"> <%= conteudo %>... </p>
+                    <p class="card-text"><small class="text-muted">Last updated in <%= dataAtualizao %></small></p>
                 </div>
             </div>
         </div>
     </div>
 </a>
-<a class="cards" style="cursor: pointer;">
-    <div class="card mb-3" id="card-partida-<%=1%>">
-        <div class="row no-gutters">
-            <div class="col-md-3">
-                <img src="" class="card-img-top img-fluid " style="object-fit: fill; height: 100%;">
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h5 class="card-title"> [FORUM] : XXXXXXXXXXXXXX </h5>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"> text </p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</a>
-
+<% 
+    }
+} %>
 <!--  Modal content for the above example -->
 <div class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog" id="myModalTopic"
     aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">

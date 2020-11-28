@@ -187,11 +187,11 @@ router.post('/forum/registrar', async function(req, res) {
 
 router.get('/forum/data/:id', async function(req, res) {
    const id = req.params.key;
-
-
    let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+   let allTopics = await ForumController.getAll();
 
-   res.render('Forum/home', {sessionData});
+   
+   res.render('Forum/home', {sessionData, allTopics});
 })
 
 router.post('/forum/topico/criar', async function(req, res) {
