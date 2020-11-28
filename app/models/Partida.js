@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
-
+//lane, gameMode, gameType, championId, win, kills, deaths, assists, urlImage, gameId
 class Partida extends Model {
     static init(sequelize) {
         super.init({
@@ -7,9 +7,17 @@ class Partida extends Model {
                 primaryKey: true,
                 type: DataTypes.STRING
             },
-            key: DataTypes.STRING,
-            nome: DataTypes.STRING,
-            title: DataTypes.STRING
+            lane: DataTypes.STRING,
+            game_mode: DataTypes.STRING,
+            game_type: DataTypes.STRING,
+            champion_id: DataTypes.INTEGER,
+            win: DataTypes.ENUM({values: ['S', 'N']}),
+            kills: DataTypes.INTEGER,
+            deaths: DataTypes.INTEGER,
+            assists: DataTypes.INTEGER,
+            game_id: DataTypes.STRING,
+            usuario_id: DataTypes.INTEGER,
+            data_criacao: DataTypes.DATE
         }, {
             timestamps: false,
             sequelize,

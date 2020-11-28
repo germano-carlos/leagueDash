@@ -12,6 +12,8 @@ storage.connect('./information.json');
 const UsuarioController = require('./controller/UsuarioController');
 const CampeaoController = require('./controller/CampeaoController');
 const PartidaController = require('./controller/PartidaController');
+const ForumController = require('./controller/ForumController');
+const MensagemController = require('./controller/MensagemController');
 
 router.get('/', function (req, res) {
 
@@ -71,6 +73,7 @@ router.get('/invocador/data/:id', async function (req, res) {
    const id = req.params.id;
    const user = await UsuarioController.getUser(id);
    const Partidas = await PartidaController.store(user);
+   await PartidaController.adicionaLocal(Partidas, sessionData.id);
 
    res.render('Dashboard/dashboard', { Partidas, sessionData });
 })
@@ -121,5 +124,114 @@ router.get('/rank/summoner/:key', async function (req, res) {
    res.render('Dashboard/dashRank', { Details, sessionData });
 })
 
+router.get('/forum', async function(req, res) {
+   res.render('Authenticator/login', {success:undefined, id:false});
+})
 
+router.get('/autenticacao/registrar', async function(req, res) {
+   res.render('Authenticator/registrar', {sucess:undefined, id:false});
+})
+
+router.post('/forum/conectar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const password = req.body.userpassword;
+
+   const User = await UsuarioController.getUserBySummonerName(userName);
+   let success;
+   let id;
+
+   if(User && (User.password == password)) {
+      success = true;
+      id = User.id;
+
+      storage.setState({
+         forum: true,
+         id
+      })
+   }
+   else{
+      success = false;
+      id = false;
+   }
+      
+   res.render('Authenticator/login', {success, id});
+})
+
+router.post('/forum/registrar', async function(req, res) {
+   
+   const userName = req.body.username;
+   const userPassword = req.body.userpassword;
+   const passwordCheck = req.body.checkpassword;
+   let sucess = false;
+   let id;
+
+   if(userPassword == passwordCheck)
+   {
+      const Usuario = await UsuarioController.addForum({userName,userPassword});
+
+      if(Usuario) {
+         sucess = true;
+         id = Usuario.id;
+
+         storage.setState({
+            forum: true,
+            id
+         })
+      }
+   }
+   else {
+      sucess = 'A senha e a contrasenha não coincidem';
+   }
+
+   
+   res.render('Authenticator/registrar', {sucess, id});
+})
+
+
+router.get('/forum/data/:id', async function(req, res) {
+   const id = req.params.id;
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+   let allTopics = await ForumController.getAll();
+
+
+   let User = await UsuarioController.getUser(id);
+
+   res.render('Forum/home', {sessionData, allTopics, User});
+})
+
+router.post('/forum/topico/criar', async function(req, res) {
+   const title = req.body.title;
+   const categoria = req.body.categoria;
+   const conteudo = req.body.conteudo;
+
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   const Topico = await ForumController.store({title, categoria, id: sessionData.id, conteudo});
+
+   return res.json(Topico);
+})
+
+router.get('/forum/topico/:id', async function(req,res) {
+   let id = req.params.id;
+   let teste = await ForumController.getId(id);
+   return res.json(teste);
+})
+
+router.post('/forum/topico/responder', async function(req,res) {
+   let mensagem = req.body.conteudo;
+   let topicoId = req.body.topicoId;
+   let sessionData = { connected: storage.state.searched, id: storage.state.id ? storage.state.id : null };
+
+   const Mensagem = await MensagemController.store({mensagem, topicoId, id:sessionData.id});
+
+   return res.json(Mensagem);
+})
+
+router.get('/forum/topico/mensagens/:identificador', async function(req, res) {
+   const id = req.params.identificador;
+
+   const ListMessages = await MensagemController.getAllByTopicId(id);
+   return res.json(ListMessages);
+})
 module.exports = router;

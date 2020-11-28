@@ -1,0 +1,87 @@
+<%- contentFor('HeaderCss') %>
+<!--Chartist Chart CSS -->
+<!-- perticular page css -->
+
+<%- contentFor('HeaderStyle') %>
+<% include ../Partials/HeaderStyle  %>
+<%- contentFor('Header') %>
+
+<%- contentFor('Sidebar') %>
+
+<%- contentFor('body')  %>
+<div class="wrapper-page">
+
+    <div class="card overflow-hidden account-card mx-3">
+        
+        <div class="bg-primary p-4 text-white text-center position-relative">
+            <h4 class="font-20 m-b-5">Bem Vindo ao Fórum - League Dash</h4>
+            <p class="text-white-50 mb-4">Faça Login para Entrar em nosso fórum</p>
+        </div>
+        <div class="account-card-content"> 
+
+            <form class="form-horizontal m-t-30" action="/forum/conectar" method="POST">
+
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Insira seu nome de usuário/invocador">
+                </div>
+
+                <div class="form-group">
+                    <label for="userpassword">Senha</label>
+                    <input type="password" class="form-control" id="userpassword" name="userpassword"  placeholder="Insira sua senha">
+                </div>
+
+                <div class="form-group row m-t-20">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-primary w-md waves-effect waves-light" style="width: 100%" type="submit">Entrar</button>
+                    </div>
+                </div>
+
+                <div class="form-group m-t-10 mb-0 row">
+                    <div class="col-12 m-t-20">
+                        <a href="/autenticacao/recuperar"><i class="mdi mdi-lock"></i> Esqueceu sua senha ? </a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="m-t-40 text-center">
+        <p>Não possui uma conta ? <a href="/autenticacao/registrar" class="font-500 text-primary"> Registrar Agora</a> </p>
+    </div>
+    <% if (success && typeof success != 'undefined') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                swal("Credenciais Corretas", "Informações válidadas, aguarde e você será redirecionado", "success");
+                setTimeout(function(){ window.location.href = "/forum/data/"+"<%= id %>"; }, 1000);
+            })
+        </script>
+    <% } %>
+    <% if (!success && typeof success != 'undefined') { %>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                swal("Credenciais Incorretas", "Informações não válidadas, favor tentar novamente", "error");
+            })
+        </script>
+    <% } %>
+</div>
+<%- contentFor('FooterJs') %>
+<%- contentFor('BottomJs') %>
+
+
+<style>
+    .content-page {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        font-size: 100% !important;
+        font: inherit !important;
+        vertical-align: baseline !important;
+        
+    }
+    body 
+    {
+        background-color: #343a40;
+    }
+</style>
