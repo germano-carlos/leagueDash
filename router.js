@@ -73,6 +73,7 @@ router.get('/invocador/data/:id', async function (req, res) {
    const id = req.params.id;
    const user = await UsuarioController.getUser(id);
    const Partidas = await PartidaController.store(user);
+   await PartidaController.adicionaLocal(Partidas, sessionData.id);
 
    res.render('Dashboard/dashboard', { Partidas, sessionData });
 })
@@ -145,7 +146,8 @@ router.post('/forum/conectar', async function(req, res) {
       id = User.id;
 
       storage.setState({
-         forum: true
+         forum: true,
+         id
       })
    }
    else{
@@ -173,7 +175,8 @@ router.post('/forum/registrar', async function(req, res) {
          id = Usuario.id;
 
          storage.setState({
-            forum: true
+            forum: true,
+            id
          })
       }
    }

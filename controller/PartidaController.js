@@ -4,10 +4,12 @@ const CampeaoController = require('../controller/CampeaoController');
 /*const Partida = require('../app/models/Partida.js');*/
 
 const Campeao = require('../app/models/Campeao');
+const Partida = require('../app/models/Partida');
 const Api = require('../lib/Api');
 
 const connection = new Sequelize(dbConfig);
 Campeao.init(connection);
+Partida.init(connection);
 
 module.exports = {
 
@@ -20,10 +22,10 @@ module.exports = {
         const Partidas = await Api.obterPartidas(jsonParams.account_id, timeStamp)
                                     .then((data) => { return data; })
                                     .catch((err) => { return false; });
-        console.log(Partidas)
+
         let promisse = new Promise(async (resolve, reject) => { resolve() } );
         if (Partidas) {
-            console.log('entrou')
+
             let contador = 0;
 
             promisse = new Promise(async (resolve, reject) => {
@@ -65,10 +67,12 @@ module.exports = {
                             achou = true;
 
                             let champion = await Campeao.findOne({ where: { key: championId } });
-                            urlImage = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.nome.replace(" ", "")}_0.jpg`;
+                            urlImage = `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id.replace(" ", "")}_0.jpg`;
                         }
 
-                        PartidasDetalhes.push({ lane, gameMode, gameType, championId, win, kills, deaths, assists, urlImage, gameId });
+                        let object = { lane, gameMode, gameType, championId, win, kills, deaths, assists, urlImage, gameId };
+                        PartidasDetalhes.push(object);
+
                         if (PartidasDetalhes.length == Partidas.length || contador == 9) {
                             resolve(PartidasDetalhes)
                         }
@@ -125,6 +129,30 @@ module.exports = {
         }
 
         return playerArray;
+    },
+    async adicionaLocal(object, idInvocador) {
+        console.log(idInvocador)
+        for(let i=0; i < object.length; i++)
+        {
+            var findMatch = await Partida.findOne({ where: { game_id: object[i].gameId } })
+
+            if(!findMatch)
+            {
+                let part = await Partida.create({
+                                lane: object[i].lane,
+                                game_mode:object[i].gameMode,
+                                game_type:object[i].gameType,
+                                champion_id:object[i].championId,
+                                win: (object[i].win) ? 'S' : 'N',
+                                kills: object[i].kills,
+                                deaths: object[i].deaths,
+                                assists: object[i].assists,
+                                game_id:object[i].gameId,
+                                data_criacao: new Date(),
+                                usuario_id: idInvocador
+                            })
+            }
+        }
     }
 
 }
