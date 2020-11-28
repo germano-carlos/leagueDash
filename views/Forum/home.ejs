@@ -154,16 +154,13 @@
                         alert('tetes')
                     }
                 }).then((data) => {
-                    alert('entrou')
-                    if(data) { swal("Tópico criado com sucesso", "Parabéns, em breve você conseguirá visualizar e interagir com os demais usuários", "success") };
+                    if(data) { 
+                        swal("Tópico criado com sucesso", "Parabéns, em breve você conseguirá visualizar e interagir com os demais usuários", "success");
+                        setTimeout(function(){ window.location.reload(); }, 1200); };
                 });
             }
         })
         
-
-        $('#teste').click(function() {
-            alert('teste');
-        })
 
         $('.cards').click(function() {
             let identificador = $(this).data('id');
@@ -256,13 +253,6 @@
                 
         });
 
-        function buscaMensagens(identificador)
-        {
-            let output = false;
-            
-
-            return output;
-        }
     })
 
 </script>

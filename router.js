@@ -206,7 +206,7 @@ router.post('/forum/topico/criar', async function(req, res) {
 
    const Topico = await ForumController.store({title, categoria, id: sessionData.id, conteudo});
 
-   return Topico;
+   return res.json(Topico);
 })
 
 router.get('/forum/topico/:id', async function(req,res) {
