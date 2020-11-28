@@ -196,8 +196,13 @@ router.get('/forum/data/:id', async function(req, res) {
 
 
    let User = await UsuarioController.getUser(id);
-
-   res.render('Forum/home', {sessionData, allTopics, User});
+   if(User.forum == 'N')
+   {
+      res.render('Authenticator/login', {success:undefined, id:false});
+   }
+   else {
+      res.render('Forum/home', {sessionData, allTopics, User});
+   }
 })
 
 router.post('/forum/topico/criar', async function(req, res) {
